@@ -3,6 +3,7 @@ Pacientes =[]
 Consulta = []
 Agenda = []
 
+
 #Criação do menu principal
 def menuPrincipal():
     while Executando:
@@ -36,7 +37,7 @@ def menuPrincipal():
             suporte = []
         elif (opcao == 5):
             print("Obrigado por contar o Hospital das Clinícas, espero te ver em breve!!")
-            executando = False
+            Executando = False
 
 #Criação da "aba" de cadastro.
 def fazerCadastro():
@@ -91,3 +92,17 @@ def marcarConsulta():
     Consulta = {"especialidade": especialidade, "data": data}
     Consulta.append(Consulta)
     print("Consulta marcada com sucesso!")
+
+#Criação da "aba" de Agenda
+def verAgenda():
+    print("----Agenda----")
+
+    #Validação para saber se alguma consulta já foi marcada.
+    if not Consulta:
+        print("Nenhuma consulta marcada!")
+    #Abaixo foi feito um teste, caso tenha consulta maracada, seria pego cada uma, começando do 1 (devido ao "start = 1")
+    # Para cada consulta ele começa com o númeiro "i", para enumerar a lista da agenda, mostrando as informações de data, hora, nome e especialidade. 
+    else: 
+        for i, Consulta in enumerate(Consulta, start=1):
+            print(f"{i}. Paciente: {Consulta['nome']}, Data: {Consulta['data']}, Horário: {Consulta['horario']}, Especialidade: {Consulta['especialidade']}")
+        print()
