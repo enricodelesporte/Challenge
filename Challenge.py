@@ -3,9 +3,12 @@ Pacientes =[]
 Consulta = []
 Agenda = []
 
+Executando = True
 
 #Criação do menu principal
 def menuPrincipal():
+    global Executando
+    
     while Executando:
         print("----Menu Principal----")
         print("Selecione uma opção para prosseguir:")
@@ -16,28 +19,32 @@ def menuPrincipal():
         print("(5) Para sair.")
 
         #Escolha do usuário
-        opcao = int(input())
-
+        opcao = input()
+        
         #Válidação da escolha do usuário
         if (not opcao.isdigit() or int(opcao) is range(1, 6)):
             print("Opção inválida. Digite um número de 1 a 5 para poder continuar.")
+            continue
         
         #Cada opção selecionada criará uma lista no qual será armazenado informações,
         #  isso será util no futuro, principalmente para o banco de dados.
         if (opcao == 1):
-            fazerCasatro = []
+            fazerCadastro()
 
         elif (opcao == 2):
-            marcarConsulta = []
+            marcarConsulta()
         
         elif (opcao == 3):
-            verAgenda = []
+            verAgenda()
         
         elif (opcao == 4):
-            suporte = []
+            suporte()
         elif (opcao == 5):
             print("Obrigado por contar o Hospital das Clinícas, espero te ver em breve!!")
             Executando = False
+while Executando:
+    menuPrincipal()
+        
 
 #Criação da "aba" de cadastro.
 def fazerCadastro():
@@ -54,7 +61,7 @@ def fazerCadastro():
         nome = input().strip
     
     print("Qual o seu CPF (digite apenas número)")
-    CPF = int(input())
+    CPF = input()
 
     #Válidação do CPF, nesse caso válidamos apenas se foi digitado números e se a quantidade digitada está compátivel com um CPF
     while (not CPF.isdigit() or len(CPF) != 11):
@@ -62,7 +69,7 @@ def fazerCadastro():
         CPF = int(input())
 
     print("Digite sua idade:")
-    idade = int(input())
+    idade = input()
 
     #Valídação da idade do usuário.
     while (not idade.isdigit() or int(idade) < 0 or int(idade) > 120):
@@ -116,3 +123,5 @@ def suporte():
         print("Sua mensagem foi enviada para o nosso suporte.")
     else:
         print("Este campo está vazio. Prencha corretamente.")
+
+menuPrincipal()
