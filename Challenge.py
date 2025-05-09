@@ -65,7 +65,7 @@ def fazerCadastro():
     idade = int(input())
 
     #Valídação da idade do usuário.
-    while not idade.isdigit() or int(idade) < 0 or int(idade) > 120:
+    while (not idade.isdigit() or int(idade) < 0 or int(idade) > 120):
         print ("Idade inválida. Digite novamente.")
         idade = int(input())
     
@@ -78,7 +78,7 @@ def fazerCadastro():
 def marcarConsulta():
 
     #Valídação para saber se o paciente se cadastrou.
-    if not Pacientes:
+    if (not Pacientes):
         print("Nenhum paciente cadastrado, faça seu cadastro primeiro.")
         return
     
@@ -98,7 +98,7 @@ def verAgenda():
     print("----Agenda----")
 
     #Validação para saber se alguma consulta já foi marcada.
-    if not Consulta:
+    if (not Consulta):
         print("Nenhuma consulta marcada!")
     #Abaixo foi feito um teste, caso tenha consulta maracada, seria pego cada uma, começando do 1 (devido ao "start = 1")
     # Para cada consulta ele começa com o númeiro "i", para enumerar a lista da agenda, mostrando as informações de data, hora, nome e especialidade. 
@@ -106,3 +106,13 @@ def verAgenda():
         for i, Consulta in enumerate(Consulta, start=1):
             print(f"{i}. Paciente: {Consulta['nome']}, Data: {Consulta['data']}, Horário: {Consulta['horario']}, Especialidade: {Consulta['especialidade']}")
         print()
+
+#Criação da "aba" de Suporte.
+def suporte():
+    print("----Suporte----")
+    print("Descreva o problema:")
+    problema = input().strip
+    if (problema):
+        print("Sua mensagem foi enviada para o nosso suporte.")
+    else:
+        print("Este campo está vazio. Prencha corretamente.")
