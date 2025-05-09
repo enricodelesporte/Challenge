@@ -61,8 +61,14 @@ def fazerCadastro():
     print("Digite sua idade:")
     idade = int(input())
 
+    #Valídação da idade do usuário.
     while not idade.isdigit() or int(idade) < 0 or int(idade) > 120:
         print ("Idade inválida. Digite novamente.")
         idade = int(input())
     
-    Pacientes
+    #Adicionando as informações do usuário na lista.
+    Pacientes = {"nome": nome, "cpf": CPF, "idade": idade}
+    Pacientes.append(Pacientes)
+    print ("Paciente ", nome, " cadastrado com sucessso!")
+
+    
