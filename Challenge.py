@@ -1,5 +1,7 @@
 #Lista de pacientes
 Pacientes =[]
+Consulta = []
+Agenda = []
 
 #Criação do menu principal
 def menuPrincipal():
@@ -71,4 +73,21 @@ def fazerCadastro():
     Pacientes.append(Pacientes)
     print ("Paciente ", nome, " cadastrado com sucessso!")
 
+#Criação da "aba" de marcar consulta.
+def marcarConsulta():
+
+    #Valídação para saber se o paciente se cadastrou.
+    if not Pacientes:
+        print("Nenhum paciente cadastrado, faça seu cadastro primeiro.")
+        return
     
+    print("Qual médico especialista você deseja marcar:")
+    especialidade = input().strip
+    print("Qual data deseja marcar sua consult (dd/MM):")
+    data = input().strip
+    print("Consulta maracada para o dia ", data, " para uma consulta sobre ", especialidade, ".")
+
+    #Criação da lista de consulta
+    Consulta = {"especialidade": especialidade, "data": data}
+    Consulta.append(Consulta)
+    print("Consulta marcada com sucesso!")
