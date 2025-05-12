@@ -1,3 +1,4 @@
+import datetime
 #Lista de pacientes
 Pacientes =[]
 Consultas = []
@@ -51,6 +52,8 @@ def fazerCadastro():
     print("----Cadastro----")
     print("Qual o seu nome completo:")
 
+    #FAZER VALIDAÇÃO DO NOME
+
     #strip é um método usado para remover os possíveis espaços em branco ou não usados, além de remover caracteries especificos 
     # o motivo desse uso é evitar problemas de digitação que o usuário pode cometer, além de evitar problemas na validação de dados nas listas.
     nome = input().strip()
@@ -84,6 +87,8 @@ def fazerCadastro():
 #Criação da "aba" de marcar consulta.
 def marcarConsulta():
 
+    #PERGUNTAR NOME PARA SABER SE O PACIENTE JÁ ESTA CADASTRADO E FAZER A VALIDAÇÃO
+
     #Valídação para saber se o paciente se cadastrou.
     if (not Pacientes):
         print("Nenhum paciente cadastrado, faça seu cadastro primeiro.")
@@ -93,10 +98,12 @@ def marcarConsulta():
     especialidade = input().strip()
     print("Qual data deseja marcar sua consult (dd/MM):")
     data = input().strip()
-    print("Consulta maracada para o dia ", data, " para uma consulta sobre ", especialidade, ".")
+    print("Qual horário deseja marcar?")
+    horario = input()
+    print("Consulta maracada para o dia ", data, "ás", horario, "para uma consulta sobre ", especialidade, ".")
 
     #Criação da lista de consulta
-    Consulta = {"especialidade": especialidade, "data": data}
+    Consulta = {"especialidade": especialidade, "data": data, "horario": horario}
     Consultas.append(Consulta)
     print("Consulta marcada com sucesso!")
 
