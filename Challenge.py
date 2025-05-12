@@ -56,12 +56,7 @@ def fazerCadastro():
 
     #strip é um método usado para remover os possíveis espaços em branco ou não usados, além de remover caracteries especificos 
     # o motivo desse uso é evitar problemas de digitação que o usuário pode cometer, além de evitar problemas na validação de dados nas listas.
-    nome = input().strip()
-
-    #Verificação para saber se o nome é uma string, não aceitando números.
-    while not nome or not all(parte.isalpha() for parte in nome.split()):
-        print("Nome inválido, use apenas letras (não utilize números ou letras!).")
-        nome = input().strip()
+    nome = input().strip
 
     #O uso do while é para evitar que o usuário deixe esse campo em branco, o tornando obrigatório ser preenchido.
     while not nome:
@@ -123,8 +118,8 @@ def marcarConsulta():
     print("Consulta maracada para o dia ", data, "ás", horario, "para uma consulta sobre ", especialidade, ".")
 
     #Criação da lista de consulta
-    Consulta = {"especialidade": especialidade, "data": data, "horario": horario, "nome": nome}
-    Consultas.append(Consulta)
+    Consulta = {"especialidade": especialidade, "data": data}
+    Consulta.append(Consulta)
     print("Consulta marcada com sucesso!")
 
 #Criação da "aba" de Agenda
