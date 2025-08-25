@@ -26,12 +26,12 @@ class pacienteCRUD:
         rows = self.cursor.fetchall()
         return [Paciente(nome = row[1], idade=row[2], cpf=row[3]) for row in rows]
     
-    def atualizarPaciente(self, idPaciente, novoNome, novaIdade):
+    def atualizarPaciente(self, paciente_id, novoNome, novaIdade):
         sql = "UPDATE paciente SET nome = :1, idade = :2 WHERE id = :3"
-        self.cursor.execute(sql, (novoNome, novaIdade, idPaciente))
+        self.cursor.execute(sql, (novoNome, novaIdade, paciente_id))
         self.conn.commit()
-    
-    def deletarPaciente(self, idPaciente):
+
+    def deletarPaciente(self, paciente_id):
         sql = "DELETE FROM paciente WHERE id = :1"
-        self.cursor.execute(sql, (idPaciente,))
+        self.cursor.execute(sql, (paciente_id,))
         self.conn.commit()
