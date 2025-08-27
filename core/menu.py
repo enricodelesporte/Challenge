@@ -1,4 +1,4 @@
-class menu:
+class Menu:
     def __init__(self, opcao):
         self.opcao = opcao
 
@@ -10,5 +10,3 @@ class menu:
                "(3) Ver agenda.\n"
                "(4) Falar com o suporte.\n"
                "(5) Para sair.")
-
-        print("(5) Para sair.")
