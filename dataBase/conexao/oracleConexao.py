@@ -1,4 +1,4 @@
-import cx_Oracle
+import oracledb
 
 class oracleConexao:
     def __init__(self, user, password, host, port, serviceName):
@@ -11,12 +11,12 @@ class oracleConexao:
 
     def conectar(self):
         try:
-            dsn = cx_Oracle.makedsn(self.host, self.port, service_name=self.serviceName)
-            self.conn = cx_Oracle.connect(user=self.user, password=self.password, dsn=dsn)
+            dsn = oracledb.makedsn(self.host, self.port, service_name=self.serviceName)
+            self.conn = oracledb.connect(user=self.user, password=self.password, dsn=dsn)
             print("Conexão bem-sucedida!")
             return self.conn
-        
-        except cx_Oracle.Error as e:
+
+        except oracledb.Error as e:
             print("Erro ao conectar:", e)
             return None
 
