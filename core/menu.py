@@ -2,11 +2,13 @@ class Menu:
     def __init__(self, opcao):
         self.opcao = opcao
 
-    def __str__(self):
-        return("----Menu Principal----\n"
-               "Selecione uma opção para prosseguir:\n"
-               "(1) Fazer o cadastro.\n"
-               "(2) Marcar consulta.\n"
-               "(3) Ver agenda.\n"
-               "(4) Falar com o suporte.\n"
-               "(5) Para sair.")
+    def menu_principal(self):
+        print("----Menu Principal----")
+        print("Selecione uma opção para prosseguir:")
+        print("(1) Fazer o cadastro.")
+        print("(2) Marcar consulta.")
+        print("(3) Ver agenda.")
+        print("(4) Falar com o suporte.")
+        print("(5) Para sair.")
+
+    
