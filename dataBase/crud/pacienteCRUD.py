@@ -12,23 +12,24 @@ class pacienteCRUD:
                 nome VARCHAR2(100) NOT NULL,
                 idade NUMBER (3) NOT NULL,
                 CPF VARCHAR2(20) NOT NULL,
-                email VARCHAR2(100) NOT NULL
+                email VARCHAR2(100) NOT NULL,
+                senha VARCHAR2(20) NOT NULL
             )
         """)
         self.conn.commit()
 
     def criarPaciente (self, paciente: Paciente):
-        sql = "INSERT INTO paciente (nome, idade, cpf, email) VALUE ( :1, :2, :3, :4)"
-        self.cursor.execute(sql, (paciente.nome, paciente.idade, paciente.CPF, paciente.email))
+        sql = "INSERT INTO paciente (nome, idade, cpf, email, senha) VALUE ( :1, :2, :3, :4, :5)"
+        self.cursor.execute(sql, (paciente.nome, paciente.idade, paciente.CPF, paciente.email, paciente.senha))
         self.conn.commit()
 
     def listarPacientes(self):
-        self.cursor.execute("SELECT id, nome, cpf, email FROM paciente")
+        self.cursor.execute("SELECT id, nome, cpf, email, senha FROM paciente")
         rows = self.cursor.fetchall()
-        return [Paciente(nome = row[1], idade=row[2], cpf=row[3], email=row[4]) for row in rows]
+        return [Paciente(nome = row[1], idade=row[2], cpf=row[3], email=row[4], senha=row[5]) for row in rows]
 
-    def atualizarPaciente(self, paciente_id, novoNome, novaIdade, novoEmail):
-        sql = "UPDATE paciente SET nome = :1, idade = :2, email = :3 WHERE id = :4"
+    def atualizarPaciente(self, paciente_id, novoNome, novaIdade, novoEmail, novaSenha):
+        sql = "UPDATE paciente SET nome = :1, idade = :2, email = :3, senha = :4 WHERE id = :5"
         self.cursor.execute(sql, (novoNome, novaIdade, novoEmail, paciente_id))
         self.conn.commit()
 
