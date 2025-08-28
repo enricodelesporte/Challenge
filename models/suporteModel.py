@@ -1,8 +1,9 @@
+from models.pacienteModel import Paciente
 class Suporte:
-    def __init__(self, nome: str, problema: str, email: str, nota: str = None):
+    def __init__(self, nome: str, email: str, problema: str, nota: int):
         self.nome = nome
-        self.problema = problema
         self.email = email
+        self.problema = problema
         self.nota = nota
 
     def __str__(self):
