@@ -1,0 +1,123 @@
+import core
+from models.agendaModel import Agenda
+from models.pacienteModel import Paciente
+from models.consultaModel import Consulta
+
+from dataBase import pacienteCRUD, consultaCRUD
+
+class Validacao:
+    def escolha_menu(self, opcao):
+        while True:
+            opcao = input()
+
+            if (not opcao.isdigit() or int(opcao) not in range(1, 6)):
+                print("Opção inválida. Digite um número de 1 a 5 para poder continuar.")
+                continue
+
+            opcao = int(opcao)
+
+            if (opcao == 1):
+                core.cadastro.fazerCadastro()
+
+            elif (opcao == 2):
+                core.consultaService.marcarConsulta()
+
+            elif (opcao == 3):
+                core.agenda.verAgenda()
+
+            elif (opcao == 4):
+                core.suporte.falarComSuporte()
+
+            elif (opcao == 5):
+                print("Obrigado por contar o Hospital das Clínicas, espero te ver em breve!!")
+                return False
+    
+    def validar_criar_conta_senha(self, senha):
+        while not senha or len(senha) <= 5:
+            if not senha:
+                print("Senha inválida. A senha não pode estar vazia.")
+            elif len(senha) <= 5:
+                print("Senha fraca. A senha deve ter pelo menos 6 caracteres.")
+        return True
+
+    def validar_criar_conta_cpf(self, cpf):
+        while not cpf or len(cpf) != 11 or not cpf.isdigit():
+            if not cpf:
+                print("CPF inválido. O CPF não pode estar vazio.")
+            elif len(cpf) != 11:
+                print("CPF inválido. O CPF deve ter 11 dígitos.")
+                cpf = input("Digite o CPF novamente: ")
+        return True
+    
+    def validar_criar_conta_idade(self, idade):
+        while not idade or not idade.isdigit() or int(idade) <= 16:
+            if not idade:
+                print("Idade inválida. A idade não pode estar vazia.")
+            elif not idade.isdigit():
+                print("Idade inválida. A idade deve ser um número.")
+            elif int(idade) <= 16:
+                print("Idade inválida. A idade deve ser maior que 15 anos.")
+            idade = input("Digite a idade novamente: ")
+        return True
+    
+    def validar_nome(self, nome):
+        while not nome or len(nome) < 2:
+            print("Nome inválido. O nome deve ter pelo menos 2 caracteres.")
+            nome = input("Digite o nome novamente: ")
+        return True
+
+    def validar_email(self, email):
+        while not email or "@" not in email or "." not in email:
+            print("Email inválido.")
+            email = input("Digite o email novamente: ")
+        return True
+
+    def validar_cpf(self, cpf):
+        while not cpf or len(cpf) != 11 or not cpf.isdigit():
+            if not cpf:
+                print("CPF inválido. O CPF não pode estar vazio.")
+            elif len(cpf) != 11:
+                print("CPF inválido. O CPF deve ter 11 dígitos.")
+            elif not cpf.isdigit():
+                print("CPF inválido. O CPF deve conter apenas dígitos.")
+            cpf = input("Digite o CPF novamente: ")
+        return True
+
+    def validar_login_cpf(self, cpf):
+        while not cpf or cpf != pacienteCRUD.listar_pacientes()[0].cpf:
+            if not cpf:
+                print("CPF inválido. O CPF não pode estar vazio.")
+            elif cpf != pacienteCRUD.listar_pacientes()[0].cpf:
+                print("CPF inválido. O CPF não corresponde a nenhum paciente cadastrado.")
+            cpf = input("Digite o CPF novamente: ")
+        return True
+    
+    def validar_login_senha(self, senha):
+        while not senha or len(senha) <= 7 or senha != pacienteCRUD.listar_pacientes()[0].senha:
+            if not senha:
+                print("Senha inválida. A senha não pode estar vazia.")
+            elif len(senha) <= 7:
+                print("Senha fraca. A senha deve ter pelo menos 8 caracteres.")
+            elif Paciente.senha != senha:
+                print("Senha incorreta. Tente novamente.")
+        return True
+
+    def validar_usuario(self, usuario : Paciente):
+        while usuario not in pacienteCRUD.listar_pacientes():
+            print("Usuário não encontrado. Faça seu cadastro primeiro.")
+            return False
+        if usuario.nome == pacienteCRUD.listar_pacientes()[0].nome:
+            return True
+
+    def validar_consulta(self, consulta: Consulta):
+        while consulta not in consultaCRUD.listar_consultas():
+            print("Consulta não encontrada. Verifique se foi marcada corretamente.")
+            return False
+        return True
+
+    def validar_agenda(self, agenda: Agenda, consulta: Consulta):
+        while consulta not in agenda.consultas:
+            print("Consulta não encontrada na agenda. Verifique se foi marcada corretamente.")
+            return False
+        return True
+    
