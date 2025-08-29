@@ -84,30 +84,37 @@ class Validacao:
         return True
 
     def validar_login_cpf(self, cpf):
-        while not cpf or cpf != pacienteCRUD.listar_pacientes()[0].cpf:
+        pacientes = pacienteCRUD.listar_pacientes()
+
+        while not cpf or not any(p.cpf == cpf for p in pacientes):
             if not cpf:
                 print("CPF inválido. O CPF não pode estar vazio.")
-            elif cpf != pacienteCRUD.listar_pacientes()[0].cpf:
+            elif not any(p.cpf == cpf for p in pacientes):
                 print("CPF inválido. O CPF não corresponde a nenhum paciente cadastrado.")
             cpf = input("Digite o CPF novamente: ")
         return True
     
     def validar_login_senha(self, senha):
-        while not senha or len(senha) <= 7 or senha != pacienteCRUD.listar_pacientes()[0].senha:
+        pacientes = pacienteCRUD.listar_pacientes()
+
+        while not senha or len(senha) <= 7 or not any(p.senha == senha for p in pacientes):
             if not senha:
                 print("Senha inválida. A senha não pode estar vazia.")
             elif len(senha) <= 7:
                 print("Senha fraca. A senha deve ter pelo menos 8 caracteres.")
-            elif Paciente.senha != senha:
+            elif not any(p.senha == senha for p in pacientes):
                 print("Senha incorreta. Tente novamente.")
         return True
 
     def validar_usuario(self, usuario : Paciente):
-        while usuario not in pacienteCRUD.listar_pacientes():
+        pacientes = pacienteCRUD.listar_pacientes()
+
+        if not any(p.nome == usuario.nome for p in pacientes):
             print("Usuário não encontrado. Faça seu cadastro primeiro.")
-            return False
-        if usuario.nome == pacienteCRUD.listar_pacientes()[0].nome:
             return True
+        
+        print("Usuário não encontrado. Faça seu cadastro primeiro.")
+        return False
 
     def validar_consulta(self, consulta: Consulta):
         while consulta not in consultaCRUD.listar_consultas():
