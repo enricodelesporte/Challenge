@@ -3,7 +3,8 @@ from models.agendaModel import Agenda
 from models.pacienteModel import Paciente
 from models.consultaModel import Consulta
 
-from dataBase import pacienteCRUD, consultaCRUD
+from dataBase.crud.pacienteCRUD import pacienteCRUD
+from dataBase.crud.consultaCRUD import consultaCRUD
 
 class Validacao:
     def escolha_menu(self, opcao):

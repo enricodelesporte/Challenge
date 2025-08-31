@@ -1,5 +1,5 @@
 from models.pacienteModel import Paciente
-from dataBase import pacienteCRUD
+from dataBase.crud.pacienteCRUD import pacienteCRUD
 
 class cadastro:
     def __init__(self, nome: str, idade: int, CPF: str, email: str, senha: str):

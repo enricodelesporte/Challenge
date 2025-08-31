@@ -1,5 +1,5 @@
 from models.consultaModel import Consulta
-from dataBase import consultaCRUD
+from dataBase.crud.consultaCRUD import consultaCRUD
 
 class consultaService:
     def __init__(self):
