@@ -1,4 +1,3 @@
-from core.menu import Menus
 from models.agendaModel import Agenda
 from models.pacienteModel import Paciente
 from models.consultaModel import Consulta
@@ -7,31 +6,6 @@ from dataBase.crud.pacienteCRUD import pacienteCRUD
 from dataBase.crud.consultaCRUD import consultaCRUD
 
 class Validacao:
-    def escolha_menu(self):
-        while True:
-            opcao = input()
-
-            if (not opcao.isdigit() or int(opcao) not in range(1, 6)):
-                print("Opção inválida. Digite um número de 1 a 5 para poder continuar.")
-                continue
-
-            opcao = int(opcao)
-
-            if (opcao == 1):
-                Menus().exibir_cadastro()
-
-            elif (opcao == 2):
-                Menus().exibir_consulta()
-
-            elif (opcao == 3):
-                Menus().exibir_agenda()
-
-            elif (opcao == 4):
-                Menus().exibir_suporte()
-
-            elif (opcao == 5):
-                print("Obrigado por contar o Hospital das Clínicas, espero te ver em breve!!")
-                return False
     
     def validar_criar_conta_senha(self, senha):
         while not senha or len(senha) <= 5:

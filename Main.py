@@ -20,4 +20,5 @@ def main():
 
         menuTeste.menu_principal()
         val.escolha_menu()
+        
 main()

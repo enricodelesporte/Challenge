@@ -1,7 +1,4 @@
 from core.cadastro import cadastro as cad
-from utils.validacao import Validacao
-
-
 class Menus:
     def __init__(self):
         self.opc = None
@@ -15,26 +12,31 @@ class Menus:
         print("(4) Falar com o suporte.")
         print("(5) Para sair.")
 
-    def exibir_cadastro(self):
-        vali = Validacao()
+        while True:
+            opcao = input()
 
-        print("----Menu de Cadastro----")
-        print("Qual seu nome:")
-        nome = vali.validar_nome(input())
-        print("Qual sua idade:")
-        idade = vali.validar_criar_conta_idade(input())
-        print("Qual seu CPF:")
-        cpf = vali.validar_criar_conta_cpf(input())
-        print("Qual seu email:")
-        email = vali.validar_email(input())
-        print("Qual sua senha:")
-        senha = vali.validar_criar_conta_senha(input())
-        print("(1) Voltar.")
+            if (not opcao.isdigit() or int(opcao) not in range(1, 6)):
+                print("Opção inválida. Digite um número de 1 a 5 para poder continuar.")
+                continue
 
-        
+            opcao = int(opcao)
 
-        cad(nome= nome, idade= idade, CPF= cpf, email= email, senha = senha)
+            if (opcao == 1):
+                cad().fazer_cadastro()
 
+            elif (opcao == 2):
+                Menus().exibir_consulta()
+
+            elif (opcao == 3):
+                Menus().exibir_agenda()
+
+            elif (opcao == 4):
+                Menus().exibir_suporte()
+
+            elif (opcao == 5):
+                print("Obrigado por contar o Hospital das Clínicas, espero te ver em breve!!")
+                return False
+    
 
     def exibir_consulta(self):
         print("----Menu de Consulta----")
