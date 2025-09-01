@@ -1,4 +1,6 @@
 from core.cadastro import cadastro as cad
+from utils.validacao import Validacao
+
 
 class Menus:
     def __init__(self):
@@ -14,17 +16,19 @@ class Menus:
         print("(5) Para sair.")
 
     def exibir_cadastro(self):
+        vali = Validacao()
+
         print("----Menu de Cadastro----")
         print("Qual seu nome:")
-        nome = input()
+        nome = vali.validar_nome(input())
         print("Qual sua idade:")
-        idade = input()
+        idade = vali.validar_criar_conta_idade(input())
         print("Qual seu CPF:")
-        cpf = input()
+        cpf = vali.validar_criar_conta_cpf(input())
         print("Qual seu email:")
-        email = input()
+        email = vali.validar_email(input())
         print("Qual sua senha:")
-        senha = input()
+        senha = vali.validar_criar_conta_senha(input())
         print("(1) Voltar.")
 
         
