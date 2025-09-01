@@ -7,7 +7,7 @@ from dataBase.crud.pacienteCRUD import pacienteCRUD
 from dataBase.crud.consultaCRUD import consultaCRUD
 
 class Validacao:
-    def escolha_menu(self, opcao):
+    def escolha_menu(self):
         while True:
             opcao = input()
 

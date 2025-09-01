@@ -19,5 +19,5 @@ def main():
         val = Validacao()
 
         menuTeste.menu_principal()
-        val.escolha_menu(opcao= None)
+        val.escolha_menu()
 main()

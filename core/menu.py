@@ -1,3 +1,5 @@
+from core.cadastro import cadastro as cad
+
 class Menus:
     def __init__(self):
         self.opc = None
@@ -14,9 +16,20 @@ class Menus:
     def exibir_cadastro(self):
         print("----Menu de Cadastro----")
         print("Qual seu nome:")
+        nome = input()
         print("Qual sua idade:")
+        idade = input()
         print("Qual seu CPF:")
+        cpf = input()
+        print("Qual seu email:")
+        email = input()
+        print("Qual sua senha:")
+        senha = input()
         print("(1) Voltar.")
+
+        
+
+        cad(nome= nome, idade= idade, CPF= cpf, email= email, senha = senha)
 
 
     def exibir_consulta(self):
