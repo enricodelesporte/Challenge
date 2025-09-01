@@ -1,6 +1,8 @@
 class Menus:
+    def __init__(self):
+        self.opc = None
 
-    def menu_principal(self, opcao):
+    def menu_principal(self):
         print("----Menu Principal----")
         print("Selecione uma opção para prosseguir:")
         print("(1) Fazer o cadastro.")
@@ -9,18 +11,15 @@ class Menus:
         print("(4) Falar com o suporte.")
         print("(5) Para sair.")
 
-        self.opc = opcao
-
-    def exibir_cadastro(self, opcao):
+    def exibir_cadastro(self):
         print("----Menu de Cadastro----")
         print("Qual seu nome:")
         print("Qual sua idade:")
         print("Qual seu CPF:")
         print("(1) Voltar.")
 
-        self.opc = opcao
 
-    def exibir_consulta(self, opcao):
+    def exibir_consulta(self):
         print("----Menu de Consulta----")
         print("Qual o nome do paciente:")
         print("Qual a especialidade médica:")
@@ -28,19 +27,15 @@ class Menus:
         print("Qual o horário da consulta:")
         print("(1) Voltar.")
 
-        self.opc = opcao
 
-    def exibir_agenda(self, opcao):
+    def exibir_agenda(self):
         print("----Menu de Agenda----")
         print("Aqui estão suas consultas agendadas:")
         print("(1) Voltar.")
 
-        self.opc = opcao
 
-    def exibir_suporte(self, opcao):
+    def exibir_suporte(self):
         print("----Menu de Suporte----")
         print("Como podemos ajudar?")
         print("(1) Falar com um atendente.")
         print("(2) Voltar ao menu principal.")
-
-        self.opc = opcao

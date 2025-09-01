@@ -1,4 +1,4 @@
-import core
+from core.menu import Menus
 from models.agendaModel import Agenda
 from models.pacienteModel import Paciente
 from models.consultaModel import Consulta
@@ -18,16 +18,16 @@ class Validacao:
             opcao = int(opcao)
 
             if (opcao == 1):
-                core.cadastro.fazerCadastro()
+                Menus().exibir_cadastro()
 
             elif (opcao == 2):
-                core.consultaService.marcarConsulta()
+                Menus().exibir_consulta()
 
             elif (opcao == 3):
-                core.agenda.verAgenda()
+                Menus().exibir_agenda()
 
             elif (opcao == 4):
-                core.suporte.falarComSuporte()
+                Menus().exibir_suporte()
 
             elif (opcao == 5):
                 print("Obrigado por contar o Hospital das Clínicas, espero te ver em breve!!")
