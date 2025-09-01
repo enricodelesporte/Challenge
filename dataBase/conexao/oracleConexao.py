@@ -14,7 +14,9 @@ class oracleConexao:
             conexao = oracledb.connect(
                 user="rm565760",
                 password="150606",
-                dsn="localhost:1521/orcl"
+                host="localhost",
+                port="1521",
+                serviceName="orcl"
             )
             cursor = conexao.cursor()
             print("Conexão bem-sucedida!")

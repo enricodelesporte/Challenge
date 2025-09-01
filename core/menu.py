@@ -22,7 +22,7 @@ class Menus:
             opcao = int(opcao)
 
             if (opcao == 1):
-                cad().fazer_cadastro()
+                cad.fazer_cadastro()
 
             elif (opcao == 2):
                 Menus().exibir_consulta()

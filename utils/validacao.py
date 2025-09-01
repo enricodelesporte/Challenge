@@ -13,6 +13,7 @@ class Validacao:
                 print("Senha inválida. A senha não pode estar vazia.")
             elif len(senha) <= 5:
                 print("Senha fraca. A senha deve ter pelo menos 6 caracteres.")
+                senha = input("Digite a senha novamente: ")
         return True
 
     def validar_criar_conta_cpf(self, cpf):
