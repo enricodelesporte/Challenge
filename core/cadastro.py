@@ -6,7 +6,7 @@ from dataBase.conexao.oracleConexao import oracleConexao
 
 class cadastro:
     def __init__(self, nome: str, idade: int, CPF: str, email: str, senha: str):
-        paciente = Paciente(nome, idade, CPF, email, senha)
+        self.paciente = Paciente(nome, idade, CPF, email, senha)
         conexao = oracleConexao(
             user="rm565760",
             password="150606",
@@ -15,10 +15,14 @@ class cadastro:
             serviceName="orcl"
         )
         conn, cursor = conexao.conectar()
-        paciente_crud = pacienteCRUD(conn)
-        paciente_crud.criarPaciente(paciente=paciente)
+        if conn and cursor:
+            paciente_crud = pacienteCRUD(conn)
+            paciente_crud.criarTabelaPaciente()  # Criar tabela se não existir
+            paciente_crud.criarPaciente(paciente=self.paciente)
+            print("Paciente cadastrado com sucesso!")
+        else:
+            print("Erro ao conectar com o banco de dados!")
         conexao.desconectar(conn, cursor)
-        return paciente
 
     @staticmethod
     def fazer_cadastro():

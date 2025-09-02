@@ -37,7 +37,7 @@ class Validacao:
         return True
     
     def validar_nome(self, nome):
-        while not nome or len(nome) < 2:
+        while not nome or len(nome) < 3:
             print("Nome inválido. O nome deve ter pelo menos 2 caracteres.")
             nome = input("Digite o nome novamente: ")
         return True

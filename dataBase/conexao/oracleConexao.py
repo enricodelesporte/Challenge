@@ -26,7 +26,7 @@ class oracleConexao:
             return None, None   
         
   
-    def desconectar(conexao, cursor):
+    def desconectar(self, conexao, cursor):
         try:
             if cursor:
                 cursor.close()
