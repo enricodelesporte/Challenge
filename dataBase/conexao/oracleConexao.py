@@ -9,23 +9,23 @@ class oracleConexao:
         self.serviceName = serviceName
         self.conn = None
 
-    @staticmethod    
-    def conectar():
-        try: 
-            conexao = oracledb.connect(
-                user="rm565760",
-                password="150606",
-                host="localhost",
-                port="1521",
-                serviceName="orcl"
-            )
-            cursor = conexao.cursor()
+      
+    def conectar(self):
+        try:
+            dsn = oracledb.makedsn(self.host, self.port, service_name=self.serviceName)
+            print(f"Tentando conectar em {self.host}:{self.port}/{self.serviceName} com usuário {self.user}...")
+            
+            conn = oracledb.connect(user=self.user, password=self.password, dsn=dsn)
+            cursor = conn.cursor()
+            
             print("Conexão bem-sucedida!")
-            return conexao, cursor
+            return conn, cursor
+
         except Exception as e:
-            print("Erro ao conectar:", e)
-            return None, None
-    @staticmethod
+            print("Erro ao conectar no Oracle:", e)
+            return None, None   
+        
+  
     def desconectar(conexao, cursor):
         try:
             if cursor:

@@ -10,7 +10,7 @@ class cadastro:
         conexao = oracleConexao(
             user="rm565760",
             password="150606",
-            host="localhost",
+            host="oracle.fiap.com.br",
             port="1521",
             serviceName="orcl"
         )
