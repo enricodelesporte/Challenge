@@ -9,6 +9,7 @@ class oracleConexao:
         self.serviceName = serviceName
         self.conn = None
 
+    @staticmethod    
     def conectar():
         try: 
             conexao = oracledb.connect(
@@ -24,7 +25,7 @@ class oracleConexao:
         except Exception as e:
             print("Erro ao conectar:", e)
             return None, None
-
+    @staticmethod
     def desconectar(conexao, cursor):
         try:
             if cursor:

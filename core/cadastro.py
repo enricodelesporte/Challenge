@@ -15,7 +15,7 @@ class cadastro:
             serviceName="orcl"
         )
         conn, cursor = conexao.conectar()
-        paciente_crud = pacienteCRUD(conexao)
+        paciente_crud = pacienteCRUD(conn)
         paciente_crud.criarPaciente(paciente=paciente)
         conexao.desconectar(conn, cursor)
         return paciente
