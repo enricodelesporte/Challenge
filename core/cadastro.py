@@ -3,7 +3,6 @@ from dataBase.crud.pacienteCRUD import pacienteCRUD
 from utils.validacao import Validacao as val
 from dataBase.conexao.oracleConexao import oracleConexao
 
-
 class cadastro:
     def __init__(self, nome: str, idade: int, CPF: str, email: str, senha: str):
         self.paciente = Paciente(nome, idade, CPF, email, senha)
@@ -17,7 +16,7 @@ class cadastro:
         conn, cursor = conexao.conectar()
         if conn and cursor:
             paciente_crud = pacienteCRUD(conn)
-            paciente_crud.criarTabelaPaciente()  # Criar tabela se não existir
+            paciente_crud.criarTabelaPaciente()
             paciente_crud.criarPaciente(paciente=self.paciente)
             print("Paciente cadastrado com sucesso!")
         else:
@@ -41,4 +40,5 @@ class cadastro:
         print("(1) Voltar.")
 
         cadastro(nome= nome, idade= idade, CPF= cpf, email= email, senha = senha)
+
         
