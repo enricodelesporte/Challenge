@@ -26,18 +26,18 @@ class Validacao:
         return True
     
     def validar_criar_conta_idade(self, idade):
-        while not idade or not idade.isdigit() or int(idade) <= 16:
+        while not idade or not idade.isdigit() or int(idade) <= 16 or int(idade) >= 120:
             if not idade:
                 print("Idade inválida. A idade não pode estar vazia.")
             elif not idade.isdigit():
                 print("Idade inválida. A idade deve ser um número.")
-            elif int(idade) <= 16:
+            elif int(idade) <= 16 or int(idade) >= 120:
                 print("Idade inválida. A idade deve ser maior que 15 anos.")
             idade = input("Digite a idade novamente: ")
         return True
     
     def validar_nome(self, nome):
-        while not nome or len(nome) < 2:
+        while not nome or len(nome) < 3:
             print("Nome inválido. O nome deve ter pelo menos 2 caracteres.")
             nome = input("Digite o nome novamente: ")
         return True

@@ -3,22 +3,25 @@ from dataBase.crud.pacienteCRUD import pacienteCRUD
 from utils.validacao import Validacao as val
 from dataBase.conexao.oracleConexao import oracleConexao
 
-
 class cadastro:
     def __init__(self, nome: str, idade: int, CPF: str, email: str, senha: str):
-        paciente = Paciente(nome, idade, CPF, email, senha)
+        self.paciente = Paciente(nome, idade, CPF, email, senha)
         conexao = oracleConexao(
             user="rm565760",
             password="150606",
-            host="localhost",
+            host="oracle.fiap.com.br",
             port="1521",
             serviceName="orcl"
         )
         conn, cursor = conexao.conectar()
-        paciente_crud = pacienteCRUD(conexao)
-        paciente_crud.criarPaciente(paciente=paciente)
+        if conn and cursor:
+            paciente_crud = pacienteCRUD(conn)
+            paciente_crud.criarTabelaPaciente()
+            paciente_crud.criarPaciente(paciente=self.paciente)
+            print("Paciente cadastrado com sucesso!")
+        else:
+            print("Erro ao conectar com o banco de dados!")
         conexao.desconectar(conn, cursor)
-        return paciente
 
     @staticmethod
     def fazer_cadastro():
@@ -37,4 +40,5 @@ class cadastro:
         print("(1) Voltar.")
 
         cadastro(nome= nome, idade= idade, CPF= cpf, email= email, senha = senha)
+
         

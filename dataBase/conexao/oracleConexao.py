@@ -9,46 +9,29 @@ class oracleConexao:
         self.serviceName = serviceName
         self.conn = None
 
+      
     def conectar(self):
-        try: 
-            self.conn = oracledb.connect(
-                user=self.user,
-                password=self.password,
-                host=self.host,
-                port=self.port,
-                serviceName=self.serviceName
-            )
-            cursor = self.conn.cursor()
+        try:
+            dsn = oracledb.makedsn(self.host, self.port, service_name=self.serviceName)
+            print(f"Tentando conectar em {self.host}:{self.port}/{self.serviceName} com usuário {self.user}...")
+            
+            conn = oracledb.connect(user=self.user, password=self.password, dsn=dsn)
+            cursor = conn.cursor()
+            
             print("Conexão bem-sucedida!")
-            return self.conn, cursor
-        except Exception as e:
-            print("Erro ao conectar:", e)
-            return None, None
+            return conn, cursor
 
-    def desconectar(self, conn, cursor):
+        except Exception as e:
+            print("Erro ao conectar no Oracle:", e)
+            return None, None   
+        
+  
+    def desconectar(self, conexao, cursor):
         try:
             if cursor:
                 cursor.close()
-            if conn:
-                conn.close()
-            print("Conexão encerrada.")
-        except Exception as e:
-            print("Erro ao desconectar:", e)
-
-            return self.conn, cursor
-        except Exception as e:
-            print("Erro ao conectar:", e)
-            return None, None
-
-    def desconectar(self):
-        try:
-            if self.cursor:
-                self.cursor.close()
-            if self.conn:
-                self.conn.close()
-            print("Conexão encerrada.")
-        except Exception as e:
-            print("Erro ao desconectar:", e)
+            if conexao:
+                conexao.close()
             print("Conexão encerrada.")
         except Exception as e:
             print("Erro ao desconectar:", e)
