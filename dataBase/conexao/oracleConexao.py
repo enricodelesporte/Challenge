@@ -9,28 +9,46 @@ class oracleConexao:
         self.serviceName = serviceName
         self.conn = None
 
-    def conectar():
+    def conectar(self):
         try: 
-            conexao = oracledb.connect(
-                user="rm565760",
-                password="150606",
-                host="localhost",
-                port="1521",
-                serviceName="orcl"
+            self.conn = oracledb.connect(
+                user=self.user,
+                password=self.password,
+                host=self.host,
+                port=self.port,
+                serviceName=self.serviceName
             )
-            cursor = conexao.cursor()
+            cursor = self.conn.cursor()
             print("Conexão bem-sucedida!")
-            return conexao, cursor
+            return self.conn, cursor
         except Exception as e:
             print("Erro ao conectar:", e)
             return None, None
 
-    def desconectar(conexao, cursor):
+    def desconectar(self, conn, cursor):
         try:
             if cursor:
                 cursor.close()
-            if conexao:
-                conexao.close()
+            if conn:
+                conn.close()
+            print("Conexão encerrada.")
+        except Exception as e:
+            print("Erro ao desconectar:", e)
+
+            return self.conn, cursor
+        except Exception as e:
+            print("Erro ao conectar:", e)
+            return None, None
+
+    def desconectar(self):
+        try:
+            if self.cursor:
+                self.cursor.close()
+            if self.conn:
+                self.conn.close()
+            print("Conexão encerrada.")
+        except Exception as e:
+            print("Erro ao desconectar:", e)
             print("Conexão encerrada.")
         except Exception as e:
             print("Erro ao desconectar:", e)
