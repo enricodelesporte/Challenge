@@ -61,7 +61,7 @@ class Validacao:
         return cpf
 
     def validar_login_cpf(self, cpf):
-        pacientes = pacienteCRUD.listar_pacientes()
+        pacientes = pacienteCRUD.listarPacientes()
 
         while not cpf or not any(p.cpf == cpf for p in pacientes):
             if not cpf:
@@ -72,7 +72,7 @@ class Validacao:
         return cpf
     
     def validar_login_senha(self, senha):
-        pacientes = pacienteCRUD.listar_pacientes()
+        pacientes = pacienteCRUD.listarPacientes()
 
         while not senha or len(senha) <= 7 or not any(p.senha == senha for p in pacientes):
             if not senha:
@@ -84,7 +84,7 @@ class Validacao:
         return senha
 
     def validar_usuario(self, usuario : Paciente):
-        pacientes = pacienteCRUD.listar_pacientes()
+        pacientes = pacienteCRUD.listarPacientes()
 
         if not any(p.nome == usuario.nome for p in pacientes):
             print("Usuário não encontrado. Faça seu cadastro primeiro.")
@@ -94,7 +94,7 @@ class Validacao:
         return False
 
     def validar_consulta(self, consulta: Consulta):
-        while consulta not in consultaCRUD.listar_consultas():
+        while consulta not in consultaCRUD.listarConsultas():
             print("Consulta não encontrada. Verifique se foi marcada corretamente.")
             return False
         return consulta
@@ -104,4 +104,21 @@ class Validacao:
             print("Consulta não encontrada na agenda. Verifique se foi marcada corretamente.")
             return False
         return agenda
+
+    def validar_especialidade(self, especialidade):
+        while not especialidade:
+            print("Especialidade inválida. A especialidade não pode estar vazia.")
+            especialidade = input("Digite a especialidade novamente: ")
+        return especialidade
+
+    def validar_data(self, data):
+        while not data:
+            print("Data inválida. A data não pode estar vazia.")
+            data = input("Digite a data novamente: ")
+        return data
     
+    def validar_hora(self, hora):
+        while not hora:
+            print("Horário inválido. O horário não pode estar vazio.")
+            hora = input("Digite o horário novamente: ")
+        return hora

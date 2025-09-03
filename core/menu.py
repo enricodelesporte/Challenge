@@ -36,16 +36,6 @@ class Menus:
             elif (opcao == 5):
                 print("Obrigado por contar o Hospital das Clínicas, espero te ver em breve!!")
                 return False
-    
-
-    def exibir_consulta(self):
-        print("----Menu de Consulta----")
-        print("Qual o nome do paciente:")
-        print("Qual a especialidade médica:")
-        print("Qual a data da consulta:")
-        print("Qual o horário da consulta:")
-        print("(1) Voltar.")
-
 
     def exibir_agenda(self):
         print("----Menu de Agenda----")

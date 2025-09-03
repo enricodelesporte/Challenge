@@ -1,6 +1,6 @@
 import core.agenda
 import core.cadastro
-import core.consultaService
+from core.consultaService import consultaService
 from core.menu import Menus
 import core.suporte
 import dataBase.conexao.oracleConexao
@@ -15,10 +15,14 @@ from utils.validacao import Validacao
 
 def main():
     while True:
-        menuTeste = Menus()
+        menu = Menus()
+        consulta = consultaService()
         val = Validacao()
 
-        menuTeste.menu_principal()
+        menu.menu_principal()
         val.escolha_menu()
+
+        consulta.agendarConsulta()
+
         
 main()
