@@ -2,6 +2,7 @@ from models.agendaModel import Agenda
 from models.pacienteModel import Paciente
 from models.consultaModel import Consulta
 
+
 from dataBase.crud.pacienteCRUD import pacienteCRUD
 from dataBase.crud.consultaCRUD import consultaCRUD
 
