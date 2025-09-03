@@ -1,93 +1,43 @@
-from models.consultaModel import Consulta
-from dataBase.crud.consultaCRUD import consultaCRUD
-from utils import validacao as val
-from dataBase.conexao.oracleConexao import oracleConexao
+from models.pacienteModel import Paciente
+from dataBase.crud.pacienteCRUD import pacienteCRUD
+from utils.validacao import Validacao as val
+from dataBase.conexao.db_manager import DBManager
 
-class consultaService:
-    def __init__(self, paciente, especialidade, data, hora):
-        conexao = oracleConexao(
-            user="rm565760",
-            password="150606",
-            host="oracle.fiap.com.br",
-            port="1521",
-            serviceName="orcl"
-        )
-        conn, cursor = conexao.conectar()
 
-        if conn and cursor:
-            consulta_crud = consultaCRUD(conn)  # passa só o conn
-            consulta_crud.criarTabelaConsulta()
-            consulta_crud.criarConsulta(
-                consulta=Consulta(
-                    paciente=paciente,
-                    especialidade=especialidade,
-                    data=data,
-                    hora=hora
-                )
-            )
-            print("Consulta agendada com sucesso!")
-        else:
-            print("Erro ao conectar com o banco de dados!")
-
-        conexao.desconectar(conn, cursor)
-
-    def exibir_consulta(self):
-        print("----Consultas----")
-        print(f"{'ID':<5} {'Paciente':<20} {'Data':<15} {'Hora':<10} {'Especialidade':<15}")
-        for consulta in self.listarConsultas():
-            print(f"{consulta.id:<5} {consulta.paciente:<20} {consulta.data:<15} {consulta.hora:<10} {consulta.especialidade:<15}")
+class Cadastro:
+    def __init__(self):
+        # Pega a conexão pelo DBManager
+        conn, cursor = DBManager.conectar()
+        self.pacienteCRUD = pacienteCRUD(conn)
+        self.pacienteCRUD.criarTabelaPaciente()
 
     @staticmethod
-    def agendarConsulta():
-        vali = val.Validacao()
+    def fazer_cadastro():
+        vali = val()
 
-        print("----Menu de Consulta----")
-        print("Qual o nome do paciente:")
-        paciente = vali.validar_usuario(input())
-        print("Qual a especialidade médica:")
-        especialidade = vali.validar_especialidade(input())
-        print("Qual a data da consulta:")
-        data = vali.validar_data(input())
-        print("Qual o horário da consulta:")
-        hora = vali.validar_hora(input())
+        print("---- Menu de Cadastro ----")
+        print("Qual seu nome:")
+        nome = vali.validar_nome(input())
+        print("Qual sua idade:")
+        idade = vali.validar_criar_conta_idade(input())
+        print("Qual seu CPF:")
+        cpf = vali.validar_criar_conta_cpf(input())
+        print("Qual seu email:")
+        email = vali.validar_email(input())
+        print("Qual sua senha:")
+        senha = vali.validar_criar_conta_senha(input())
         print("(1) Voltar.")
 
-        consultaService(paciente=paciente, especialidade=especialidade, data=data, hora=hora)
-
-    def listarConsultas(self):
-        conexao = oracleConexao(
-            user="rm565760",
-            password="150606",
-            host="oracle.fiap.com.br",
-            port="1521",
-            serviceName="orcl"
+        novo_paciente = Paciente(
+            nome=nome,
+            idade=idade,
+            CPF=cpf,
+            email=email,
+            senha=senha
         )
-        conn, cursor = conexao.conectar()
-        consultas = []
 
-        if conn and cursor:
-            consulta_crud = consultaCRUD(conn)
-            consultas = consulta_crud.listarConsultas()
-        else:
-            print("Erro ao conectar com o banco de dados!")
+        # Agora insere no banco
+        cadastro = Cadastro()
+        cadastro.pacienteCRUD.criarPaciente(novo_paciente)
 
-        conexao.desconectar(conn, cursor)
-        return consultas
-
-    def cancelarConsulta(self, idConsulta):
-        conexao = oracleConexao(
-            user="rm565760",
-            password="150606",
-            host="oracle.fiap.com.br",
-            port="1521",
-            serviceName="orcl"
-        )
-        conn, cursor = conexao.conectar()
-
-        if conn and cursor:
-            consulta_crud = consultaCRUD(conn)
-            consulta_crud.deletarConsulta(idConsulta)
-        else:
-            print("Erro ao conectar com o banco de dados!")
-
-        conexao.desconectar(conn, cursor)
+        print("Paciente cadastrado com sucesso!")

@@ -84,7 +84,7 @@ class Validacao:
         return senha
 
     def validar_usuario(self, usuario : Paciente):
-        pacientes = pacienteCRUD.listarPacientes()
+        pacientes = pacienteCRUD.listarPacientes(self)
 
         if not any(p.nome == usuario.nome for p in pacientes):
             print("Usuário não encontrado. Faça seu cadastro primeiro.")

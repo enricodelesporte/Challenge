@@ -1,4 +1,5 @@
-from core.cadastro import cadastro as cad
+from core.cadastro import Cadastro as cad
+from core.consultaService import consultaService as cons
 class Menus:
     def __init__(self):
         self.opc = None
@@ -25,7 +26,7 @@ class Menus:
                 cad.fazer_cadastro()
 
             elif (opcao == 2):
-                Menus().exibir_consulta()
+                cons.agendarConsulta()
 
             elif (opcao == 3):
                 Menus().exibir_agenda()
