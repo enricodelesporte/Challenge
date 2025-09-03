@@ -14,7 +14,7 @@ class Validacao:
             elif len(senha) <= 5:
                 print("Senha fraca. A senha deve ter pelo menos 6 caracteres.")
                 senha = input("Digite a senha novamente: ")
-        return True
+        return senha
 
     def validar_criar_conta_cpf(self, cpf):
         while not cpf or len(cpf) != 11 or not cpf.isdigit():
@@ -23,7 +23,7 @@ class Validacao:
             elif len(cpf) != 11:
                 print("CPF inválido. O CPF deve ter 11 dígitos.")
                 cpf = input("Digite o CPF novamente: ")
-        return True
+        return cpf
     
     def validar_criar_conta_idade(self, idade):
         while not idade or not idade.isdigit() or int(idade) <= 16 or int(idade) >= 120:
@@ -34,19 +34,19 @@ class Validacao:
             elif int(idade) <= 16 or int(idade) >= 120:
                 print("Idade inválida. A idade deve ser maior que 15 anos.")
             idade = input("Digite a idade novamente: ")
-        return True
+        return idade
     
     def validar_nome(self, nome):
         while not nome or len(nome) < 3:
             print("Nome inválido. O nome deve ter pelo menos 2 caracteres.")
             nome = input("Digite o nome novamente: ")
-        return True
+        return nome
 
     def validar_email(self, email):
         while not email or "@" not in email or "." not in email:
             print("Email inválido.")
             email = input("Digite o email novamente: ")
-        return True
+        return email
 
     def validar_cpf(self, cpf):
         while not cpf or len(cpf) != 11 or not cpf.isdigit():
@@ -57,7 +57,7 @@ class Validacao:
             elif not cpf.isdigit():
                 print("CPF inválido. O CPF deve conter apenas dígitos.")
             cpf = input("Digite o CPF novamente: ")
-        return True
+        return cpf
 
     def validar_login_cpf(self, cpf):
         pacientes = pacienteCRUD.listar_pacientes()
@@ -68,7 +68,7 @@ class Validacao:
             elif not any(p.cpf == cpf for p in pacientes):
                 print("CPF inválido. O CPF não corresponde a nenhum paciente cadastrado.")
             cpf = input("Digite o CPF novamente: ")
-        return True
+        return cpf
     
     def validar_login_senha(self, senha):
         pacientes = pacienteCRUD.listar_pacientes()
@@ -80,14 +80,14 @@ class Validacao:
                 print("Senha fraca. A senha deve ter pelo menos 8 caracteres.")
             elif not any(p.senha == senha for p in pacientes):
                 print("Senha incorreta. Tente novamente.")
-        return True
+        return senha
 
     def validar_usuario(self, usuario : Paciente):
         pacientes = pacienteCRUD.listar_pacientes()
 
         if not any(p.nome == usuario.nome for p in pacientes):
             print("Usuário não encontrado. Faça seu cadastro primeiro.")
-            return True
+            return usuario
         
         print("Usuário não encontrado. Faça seu cadastro primeiro.")
         return False
@@ -96,11 +96,11 @@ class Validacao:
         while consulta not in consultaCRUD.listar_consultas():
             print("Consulta não encontrada. Verifique se foi marcada corretamente.")
             return False
-        return True
+        return consulta
 
     def validar_agenda(self, agenda: Agenda, consulta: Consulta):
         while consulta not in agenda.consultas:
             print("Consulta não encontrada na agenda. Verifique se foi marcada corretamente.")
             return False
-        return True
+        return agenda
     
