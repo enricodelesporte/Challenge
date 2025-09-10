@@ -26,7 +26,7 @@ class Menus:
                 cad.fazer_cadastro()
 
             elif (opcao == 2):
-                cons.agendarConsulta()
+                cons.agendarConsulta(self)
 
             elif (opcao == 3):
                 Menus().exibir_agenda()

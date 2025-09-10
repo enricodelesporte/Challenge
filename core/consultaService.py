@@ -18,28 +18,31 @@ class consultaService:
         for consulta in self.listarConsultas():
             print(f"{consulta.id:<5} {consulta.paciente:<20} {consulta.data:<15} {consulta.hora:<10} {consulta.especialidade:<15}")
 
-    def agendarConsulta():
+    def agendarConsulta(self):
         vali = val.Validacao()
 
-        print("---- Menu de Consulta ----")
-        print("Qual o nome do paciente:")
-        paciente = vali.validar_usuario(input())
-        print("Qual a especialidade médica:")
-        especialidade = vali.validar_especialidade(input())
-        print("Qual a data da consulta:")
-        data = vali.validar_data(input())
-        print("Qual o horário da consulta:")
-        hora = vali.validar_hora(input())
-        print("(1) Voltar.")
+        print("----Menu de Consulta----")
+        nome_paciente = input("Qual o nome do paciente: ").strip()
+        paciente = vali.validar_usuario(nome_paciente)
+
+        if paciente is None:
+            print("Paciente não cadastrado. Voltando ao menu principal...")
+            return  # volta ao menu sem prosseguir
+
+        especialidade = vali.validar_especialidade(input("Qual a especialidade médica: "))
+        data = vali.validar_data(input("Qual a data da consulta: "))
+        hora = vali.validar_hora(input("Qual o horário da consulta: "))
 
         nova_consulta = Consulta(
-            paciente=paciente,
+            paciente=paciente,            
             especialidade=especialidade,
             data=data,
             hora=hora
         )
 
-        self.consultaCRUD.criarConsulta(nova_consulta)
+        consulta = consultaService()
+        consulta.consultaCRUD.criarConsulta(nova_consulta)
+
         print("Consulta agendada com sucesso!")
 
     def listarConsultas(self):

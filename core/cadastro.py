@@ -36,7 +36,6 @@ class Cadastro:
             senha=senha
         )
 
-        # Agora insere no banco
         cadastro = Cadastro()
         cadastro.pacienteCRUD.criarPaciente(novo_paciente)
 

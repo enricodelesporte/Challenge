@@ -83,15 +83,17 @@ class Validacao:
                 print("Senha incorreta. Tente novamente.")
         return senha
 
-    def validar_usuario(self, usuario : Paciente):
-        pacientes = pacienteCRUD.listarPacientes(self)
+    def validar_usuario(self, usuario_nome):
+        paciente_crud = pacienteCRUD()
+        pacientes = paciente_crud.listarPacientes()
 
-        if not any(p.nome == usuario.nome for p in pacientes):
-            print("Usuário não encontrado. Faça seu cadastro primeiro.")
-            return usuario
-        
+        for p in pacientes:
+            if p.nome == usuario_nome:
+                print("Usuário encontrado!")
+            return p
+
         print("Usuário não encontrado. Faça seu cadastro primeiro.")
-        return False
+        return None
 
     def validar_consulta(self, consulta: Consulta):
         while consulta not in consultaCRUD.listarConsultas():
