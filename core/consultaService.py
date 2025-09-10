@@ -5,10 +5,8 @@ from dataBase.conexao.db_manager import DBManager
 
 class consultaService:
     def __init__(self):
-        # Pega a conexão e cursor do DBManager
         conn, cursor = DBManager.conectar()
         
-        # Instancia o CRUD com a conexão
         self.consultaCRUD = consultaCRUD(conn)
         self.consultaCRUD.criarTabelaConsulta()
 
@@ -16,7 +14,7 @@ class consultaService:
         print("---- Consultas ----")
         print(f"{'ID':<5} {'Paciente':<20} {'Data':<15} {'Hora':<10} {'Especialidade':<15}")
         for consulta in self.listarConsultas():
-            print(f"{consulta.id:<5} {consulta.paciente:<20} {consulta.data:<15} {consulta.hora:<10} {consulta.especialidade:<15}")
+            print(f"{consulta.id:<5} {consulta.paciente_id:<20} {consulta.data:<15} {consulta.hora:<10} {consulta.especialidade:<15}")
 
     def agendarConsulta(self):
         vali = val.Validacao()
@@ -27,23 +25,25 @@ class consultaService:
 
         if paciente is None:
             print("Paciente não cadastrado. Voltando ao menu principal...")
-            return  # volta ao menu sem prosseguir
+            return 
 
         especialidade = vali.validar_especialidade(input("Qual a especialidade médica: "))
         data = vali.validar_data(input("Qual a data da consulta: "))
         hora = vali.validar_hora(input("Qual o horário da consulta: "))
 
         nova_consulta = Consulta(
-            paciente=paciente,            
+            paciente_id= paciente.id,
             especialidade=especialidade,
             data=data,
             hora=hora
         )
 
+
         consulta = consultaService()
         consulta.consultaCRUD.criarConsulta(nova_consulta)
 
         print("Consulta agendada com sucesso!")
+        return
 
     def listarConsultas(self):
         return self.consultaCRUD.listarConsultas()

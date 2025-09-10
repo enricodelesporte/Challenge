@@ -1,5 +1,6 @@
 class Paciente:
-    def __init__(self, nome, idade, CPF, email, senha):
+    def __init__(self, id, nome, idade, CPF, email, senha):
+        self.id = id
         self.nome = nome
         self.idade = idade
         self.CPF = CPF

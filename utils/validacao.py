@@ -2,11 +2,16 @@ from models.agendaModel import Agenda
 from models.pacienteModel import Paciente
 from models.consultaModel import Consulta
 
+import datetime
+from datetime import datetime
+
 
 from dataBase.crud.pacienteCRUD import pacienteCRUD
 from dataBase.crud.consultaCRUD import consultaCRUD
+from dataBase.conexao.db_manager import DBManager
 
 class Validacao:
+    conn, cursor = DBManager.conectar()
     
     def validar_criar_conta_senha(self, senha):
         while not senha or len(senha) <= 5:
@@ -84,7 +89,7 @@ class Validacao:
         return senha
 
     def validar_usuario(self, usuario_nome):
-        paciente_crud = pacienteCRUD()
+        paciente_crud = pacienteCRUD(conexao= DBManager.conexao)
         pacientes = paciente_crud.listarPacientes()
 
         for p in pacientes:
@@ -114,11 +119,19 @@ class Validacao:
         return especialidade
 
     def validar_data(self, data):
-        while not data:
-            print("Data inválida. A data não pode estar vazia.")
-            data = input("Digite a data novamente: ")
-        return data
-    
+        data = data.strip()
+        parts = data.split('/')
+        if len(parts) == 2:
+            ano = datetime.now().year
+            data = f"{data}/{ano}"
+
+        try:
+            dt = datetime.strptime(data, "%d/%m/%Y").date()
+            return dt
+        except ValueError:
+            print("Data inválida! Use DD/MM ou DD/MM/YYYY.")
+            return input("Digite a data (DD/MM ou DD/MM/YYYY): ")
+
     def validar_hora(self, hora):
         while not hora:
             print("Horário inválido. O horário não pode estar vazio.")

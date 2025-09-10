@@ -2,8 +2,9 @@ from models.pacienteModel import Paciente
 from dataBase.conexao.db_manager import DBManager
 
 class pacienteCRUD:
-    def __init__(self):
-        self.conn, self.cursor = DBManager.conectar()
+    def __init__(self, conexao):
+        self.conn = conexao
+        self.cursor = self.conn.cursor()
 
     def criarTabelaPaciente(self):
         self.cursor.execute("""
@@ -36,7 +37,7 @@ class pacienteCRUD:
     def listarPacientes(self):
         self.cursor.execute("SELECT id, nome, idade,  cpf, email, senha FROM PACIENTE")
         rows = self.cursor.fetchall()
-        return [Paciente(nome=row[1], idade=row[2], CPF=row[3], email=row[4], senha=row[5]) for row in rows]
+        return [Paciente(id=row[0], nome=row[1], idade=row[2], CPF=row[3], email=row[4], senha=row[5]) for row in rows]
 
     def atualizarPaciente(self, paciente_id, novoNome, novaIdade, novoEmail, novaSenha):
         sql = "UPDATE PACIENTE SET nome = :1, idade = :2, email = :3, senha = :4 WHERE id = :5"

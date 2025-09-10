@@ -1,6 +1,6 @@
 class Consulta:
-    def __init__(self, paciente, data, hora, especialidade):
-        self.paciente = paciente
+    def __init__(self, paciente_id, data, hora, especialidade):
+        self.paciente_id = paciente_id
         self.data = data
         self.hora = hora
         self.especialidade = especialidade

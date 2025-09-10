@@ -6,8 +6,8 @@ from dataBase.conexao.db_manager import DBManager
 
 class Cadastro:
     def __init__(self):
-        # Pega a conexão pelo DBManager
         conn, cursor = DBManager.conectar()
+
         self.pacienteCRUD = pacienteCRUD(conn)
         self.pacienteCRUD.criarTabelaPaciente()
 
@@ -29,6 +29,7 @@ class Cadastro:
         print("(1) Voltar.")
 
         novo_paciente = Paciente(
+            id=id,
             nome=nome,
             idade=idade,
             CPF=cpf,
@@ -40,3 +41,4 @@ class Cadastro:
         cadastro.pacienteCRUD.criarPaciente(novo_paciente)
 
         print("Paciente cadastrado com sucesso!")
+        return 
