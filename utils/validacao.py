@@ -88,16 +88,29 @@ class Validacao:
                 print("Senha incorreta. Tente novamente.")
         return senha
 
-    def validar_usuario(self, usuario_nome):
+    def validar_usuario(self, nome_digitado: str):
         paciente_crud = pacienteCRUD(conexao= DBManager.conexao)
         pacientes = paciente_crud.listarPacientes()
 
-        for p in pacientes:
-            if p.nome == usuario_nome:
-                print("Usuário encontrado!")
-            return p
+        nome_digitado = (nome_digitado or "").strip().lower()
+        if not nome_digitado:
+            print("Nome vazio. Digite um nome válido.")
+            return None
 
-        print("Usuário não encontrado. Faça seu cadastro primeiro.")
+        for p in pacientes:
+            if hasattr(p, "nome"):
+                if (p.nome or "").strip().lower() == nome_digitado:
+                    return p
+
+            else:
+                try:
+                    nome_row = p[1]
+                except Exception:
+                    nome_row = None
+
+                if isinstance(nome_row, str) and nome_row.strip().lower() == nome_digitado:
+                    return p
+
         return None
 
     def validar_consulta(self, consulta: Consulta):

@@ -20,8 +20,8 @@ class consultaService:
         vali = val.Validacao()
 
         print("----Menu de Consulta----")
-        nome_paciente = input("Qual o nome do paciente: ").strip()
-        paciente = vali.validar_usuario(nome_paciente)
+        print("Qual seu nome:")
+        paciente = vali.validar_usuario(input())
 
         if paciente is None:
             print("Paciente não cadastrado. Voltando ao menu principal...")
