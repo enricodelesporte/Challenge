@@ -1,9 +1,9 @@
 from models.consultaModel import Consulta
+from dataBase.conexao.db_manager import DBManager
 
 class consultaCRUD:
     def __init__(self, conexao):
-        self.conn = conexao
-        self.cursor = self.conn.cursor()
+        self.conn, self.cursor = DBManager.conectar()
 
     def criarTabelaConsulta(self):
         self.cursor.execute("""

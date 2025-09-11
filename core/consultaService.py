@@ -3,6 +3,7 @@ from dataBase.crud.consultaCRUD import consultaCRUD
 from utils import validacao as val
 from dataBase.conexao.db_manager import DBManager
 
+
 class consultaService:
     def __init__(self):
         conn, cursor = DBManager.conectar()
