@@ -26,7 +26,6 @@ class Cadastro:
         email = vali.validar_email(input())
         print("Qual sua senha:")
         senha = vali.validar_criar_conta_senha(input())
-        print("(1) Voltar.")
 
         novo_paciente = Paciente(
             id=id,
@@ -41,4 +40,5 @@ class Cadastro:
         cadastro.pacienteCRUD.criarPaciente(novo_paciente)
 
         print("Paciente cadastrado com sucesso!")
+        
         return 

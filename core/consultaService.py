@@ -2,6 +2,8 @@ from models.consultaModel import Consulta
 from dataBase.crud.consultaCRUD import consultaCRUD
 from utils import validacao as val
 from dataBase.conexao.db_manager import DBManager
+from dataBase.crud.pacienteCRUD import pacienteCRUD
+
 
 
 class consultaService:
@@ -12,8 +14,25 @@ class consultaService:
         self.consultaCRUD.criarTabelaConsulta()
 
     def exibir_consulta(self):
+        paciente_crud = pacienteCRUD(conexao=DBManager.conexao)
+        pacientes = paciente_crud.listarPacientes()
+
+        nome_digitado = input("Digite seu nome para ver suas consultas: ").strip().lower()
+        if not nome_digitado:
+            print("Nome vazio. Digite um nome válido.")
+            return
+
+        paciente_encontrado = None
+        for p in pacientes:
+            if hasattr(p, "nome") and (p.nome or "").strip().lower() == nome_digitado:
+                paciente_encontrado = p
+                break
+
+        if not paciente_encontrado:
+            print("Paciente não encontrado.")
+            return
+
         print("---- Consultas ----")
-    
         headers = ["Data", "Hora", "Especialidade"]
         col_widths = [12, 8, 20]
 
@@ -21,13 +40,18 @@ class consultaService:
         print(header_line)
         print("-" * sum(col_widths))
 
-        for consulta in self.listarConsultas():
-            linha = f"{str(consulta.data).ljust(col_widths[1])}" \
-                    f"{str(consulta.hora).ljust(col_widths[2])}" \
-                    f"{str(consulta.especialidade).ljust(col_widths[3])}"
-            print(linha)
-            
-        return
+        consultas = self.listarConsultas()
+        encontrou = False
+        for consulta in consultas:
+            if consulta.paciente_id == paciente_encontrado.id:
+                linha = f"{str(consulta.data).ljust(col_widths[0])}" \
+                        f"{str(consulta.hora).ljust(col_widths[1])}" \
+                        f"{str(consulta.especialidade).ljust(col_widths[2])}"
+                print(linha)
+                encontrou = True
+
+        if not encontrou:
+            print("Nenhuma consulta encontrada para este paciente.")
 
     def agendarConsulta(self):
         vali = val.Validacao()
@@ -63,7 +87,7 @@ class consultaService:
             consulta.consultaCRUD.criarConsulta(nova_consulta)
 
             print("Consulta agendada com sucesso!")
-            return
+            return 
         elif opcao == 2:
             self.exibir_consulta()
             return
