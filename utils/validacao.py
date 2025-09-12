@@ -143,3 +143,14 @@ class Validacao:
             print("Horário inválido. O horário não pode estar vazio.")
             hora = input("Digite o horário novamente: ")
         return hora
+    
+    def validar_problema(self, problema):
+        while not problema or len(problema) <= 100:
+            if not problema:
+                print("Esse campo não pode estar vazio!")
+                problema = input("Tente novamente. Qual probelam deseja relatar:")
+            else:
+                print("O relato deve conter no minimo 100 caracteres!")
+                problema = input("Tente novamente. Qual probelam deseja relatar:")
+                
+        return problema

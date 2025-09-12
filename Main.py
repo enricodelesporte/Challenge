@@ -1,19 +1,20 @@
 from core.consultaService import consultaService
 from core.cadastro import Cadastro as cad
-from core.consultaService import consultaService as cons
+from core.consultaService import consultaService
 from core.suporte import Suporte as sup
 
 def main():
     while True:
         consulta = consultaService()
+        suporte = sup()
 
         while True:
             print("----Menu Principal----")
             print("Selecione uma opção para prosseguir:")
             print("(1) Fazer o cadastro.")
             print("(2) Marcar consulta.")
-            print("(4) Falar com o suporte.")
-            print("(5) Para sair.")
+            print("(3) Falar com o suporte.")
+            print("(4) Para sair.")
 
             opcao = input()
 
@@ -28,17 +29,13 @@ def main():
 
             elif (opcao == 2):
                 consulta.agendarConsulta()
-                
+
             elif (opcao == 3):
-                sup.registrar_suporte()
+                suporte.registrar_suporte()
 
             elif (opcao == 4):
                 print("Obrigado por contar o Hospital das Clínicas, espero te ver em breve!!")
                 return False
 
             consulta.agendarConsulta()
-        
-        
-
-        
 main()

@@ -1,4 +1,4 @@
-from models.suporteModel import Suporte
+from models.suporteModel import SuporteModel
 
 class suporteCRUD:
     def __init__(self, conexao):
@@ -27,7 +27,7 @@ class suporteCRUD:
             """)
         self.conn.commit()
 
-    def criarSuporte(self, suporte: Suporte):
+    def criarSuporte(self, suporte: SuporteModel):
         sql = "INSERT INTO suportes (nome, problema, email, nota) VALUES (:1, :2, :3, :4)"
         self.cursor.execute(sql, (suporte.nome, suporte.problema, suporte.email, suporte.nota))
         self.conn.commit()
@@ -35,7 +35,7 @@ class suporteCRUD:
     def listarSuportes(self):
         self.cursor.execute("SELECT id, nome, problema, email, nota FROM suportes")
         rows = self.cursor.fetchall()
-        return [Suporte(nome=row[1], problema=row[2], email=row[3], nota=row[4]) for row in rows]
+        return [SuporteModel(nome=row[1], problema=row[2], email=row[3], nota=row[4]) for row in rows]
 
     def atualizarSuporte(self, suporte_id, novoProblema, novaNota):
         sql = "UPDATE suportes SET problema = :1, nota = :2 WHERE id = :3"
