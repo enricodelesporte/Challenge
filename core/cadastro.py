@@ -40,5 +40,5 @@ class Cadastro:
         cadastro.pacienteCRUD.criarPaciente(novo_paciente)
 
         print("Paciente cadastrado com sucesso!")
-        
+
         return 

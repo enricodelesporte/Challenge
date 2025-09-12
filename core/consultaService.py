@@ -44,14 +44,21 @@ class consultaService:
         encontrou = False
         for consulta in consultas:
             if consulta.paciente_id == paciente_encontrado.id:
+                # trata hora como string
+                hora_str = str(consulta.hora)
+                if hora_str == "00:00:00":
+                    hora_str = ""  # deixa em branco
                 linha = f"{str(consulta.data).ljust(col_widths[0])}" \
-                        f"{str(consulta.hora).ljust(col_widths[1])}" \
+                        f"{hora_str.ljust(col_widths[1])}" \
                         f"{str(consulta.especialidade).ljust(col_widths[2])}"
                 print(linha)
                 encontrou = True
 
         if not encontrou:
             print("Nenhuma consulta encontrada para este paciente.")
+
+            if not encontrou:
+                print("Nenhuma consulta encontrada para este paciente.")
 
     def agendarConsulta(self):
         vali = val.Validacao()

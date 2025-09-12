@@ -139,10 +139,13 @@ class Validacao:
             return input("Digite a data (DD/MM ou DD/MM/YYYY): ")
 
     def validar_hora(self, hora):
-        while not hora:
-            print("Horário inválido. O horário não pode estar vazio.")
-            hora = input("Digite o horário novamente: ")
-        return hora
+        hora = hora.strip()
+        try:
+            dt = datetime.strptime(hora, "%H:%M")
+            return dt.strftime("%H:%M")
+        except ValueError:
+            print("Hora inválida! Use HH:MM.")
+            return input("Digite a hora novamente (HH:MM): ")
     
     def validar_problema(self, problema):
         while not problema or len(problema) <= 100:
