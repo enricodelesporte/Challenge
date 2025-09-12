@@ -27,8 +27,8 @@ def main():
                 cad.fazer_cadastro()
 
             elif (opcao == 2):
-                cons.agendarConsulta(self = consultaService)
-
+                consulta.agendarConsulta()
+                
             elif (opcao == 3):
                 sup.registrar_suporte()
 

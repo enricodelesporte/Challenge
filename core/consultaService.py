@@ -13,9 +13,21 @@ class consultaService:
 
     def exibir_consulta(self):
         print("---- Consultas ----")
-        print(f"{'Paciente':<20} {'Data':<15} {'Hora':<10} {'Especialidade':<15}")
+    
+        headers = ["Data", "Hora", "Especialidade"]
+        col_widths = [12, 8, 20]
+
+        header_line = "".join(header.ljust(width) for header, width in zip(headers, col_widths))
+        print(header_line)
+        print("-" * sum(col_widths))
+
         for consulta in self.listarConsultas():
-            print(f"{consulta.paciente_id:<20} {consulta.data:<15} {consulta.hora:<10} {consulta.especialidade:<15}")
+            linha = f"{str(consulta.data).ljust(col_widths[1])}" \
+                    f"{str(consulta.hora).ljust(col_widths[2])}" \
+                    f"{str(consulta.especialidade).ljust(col_widths[3])}"
+            print(linha)
+            
+        return
 
     def agendarConsulta(self):
         vali = val.Validacao()
@@ -53,7 +65,8 @@ class consultaService:
             print("Consulta agendada com sucesso!")
             return
         elif opcao == 2:
-            self.exibir_consulta(self)
+            self.exibir_consulta()
+            return
         elif opcao == 3:
             return
         
