@@ -12,4 +12,15 @@ class Suporte:
         suporte_crud = suporteCRUD(conexao)
         novo_suporte = Suporte(self.nome, self.problema, self.email, self.nota)
         suporte_crud.criarSuporte(novo_suporte)
+
+    def exibir_suporte(self):
+        print("----Menu de Suporte----")
+        print("Como podemos ajudar?")
+        print("(1) Falar com um atendente.")
+        print("(2) Voltar ao menu principal.")
+
+        escolha = int(input())
+
+        if escolha == "1":
+            Suporte.registrar_suporte()
     

@@ -3,8 +3,9 @@ from dataBase.conexao.db_manager import DBManager
 
 class consultaCRUD:
     def __init__(self, conexao):
-        self.conn, self.cursor = DBManager.conectar()
-
+        self.conn = conexao
+        self.cursor = self.conn.cursor()
+        
     def criarTabelaConsulta(self):
         self.cursor.execute("""
             SELECT table_name

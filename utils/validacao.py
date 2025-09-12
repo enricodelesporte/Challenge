@@ -1,4 +1,3 @@
-from models.agendaModel import Agenda
 from models.pacienteModel import Paciente
 from models.consultaModel import Consulta
 
@@ -118,12 +117,6 @@ class Validacao:
             print("Consulta não encontrada. Verifique se foi marcada corretamente.")
             return False
         return consulta
-
-    def validar_agenda(self, agenda: Agenda, consulta: Consulta):
-        while consulta not in agenda.consultas:
-            print("Consulta não encontrada na agenda. Verifique se foi marcada corretamente.")
-            return False
-        return agenda
 
     def validar_especialidade(self, especialidade):
         while not especialidade:
