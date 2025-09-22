@@ -1,10 +1,43 @@
 from models.consultaModel import Consulta
 from dataBase.conexao.db_manager import DBManager
 
+import re
+from datetime import datetime, time
+
 class consultaCRUD:
     def __init__(self, conexao):
         self.conn = conexao
         self.cursor = self.conn.cursor()
+
+    def _normalize_hora(raw):
+        if raw is None:
+            return ""
+        if isinstance(raw, time) and not isinstance(raw, datetime):
+            return raw.strftime("%H:%M")
+        if isinstance(raw, datetime):
+            return raw.strftime("%H:%M")
+
+        s = str(raw).strip()
+
+        s = s.replace("00:00:00", "").strip()
+
+        matches = re.findall(r'([01]?\d|2[0-3]):[0-5]\d', s)
+        if matches:
+            return matches[-1]
+
+        digits = re.sub(r'\D', '', s)
+        if len(digits) >= 4:
+            last4 = digits[-4:]
+            hh = last4[:2]; mm = last4[2:]
+            try:
+                hh_i = int(hh); mm_i = int(mm)
+                if 0 <= hh_i <= 23 and 0 <= mm_i <= 59:
+                    return f"{hh}:{mm}"
+            except ValueError:
+                pass
+
+        return s
+
         
     def criarTabelaConsulta(self):
         self.cursor.execute("""

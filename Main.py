@@ -11,7 +11,7 @@ def main():
         print("----Menu Principal----")
         print("Selecione uma opção para prosseguir:")
         print("(1) Fazer o cadastro.")
-        print("(2) Marcar consulta.")
+        print("(2) Consulta.")
         print("(3) Falar com o suporte.")
         print("(4) Para sair.")
 

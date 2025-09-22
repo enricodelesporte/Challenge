@@ -4,7 +4,8 @@ from utils import validacao as val
 from dataBase.conexao.db_manager import DBManager
 from dataBase.crud.pacienteCRUD import pacienteCRUD
 
-
+from datetime import datetime, time
+import re
 
 class consultaService:
     def __init__(self):
@@ -12,6 +13,18 @@ class consultaService:
         
         self.consultaCRUD = consultaCRUD(conn)
         self.consultaCRUD.criarTabelaConsulta()
+
+    def _formatar_hora(hora_raw):
+        if hora_raw is None:
+            return ""
+        if isinstance(hora_raw, (datetime, time)):
+            return hora_raw.strftime("%H:%M")
+        s = str(hora_raw).strip()
+        s = s.replace("00:00:00", "").strip()
+        m = re.findall(r'([01]?\d|2[0-3]):[0-5]\d', s)
+        if m:
+            return m[-1]
+        return s
 
     def exibir_consulta(self):
         paciente_crud = pacienteCRUD(conexao=DBManager.conexao)
@@ -44,10 +57,14 @@ class consultaService:
         encontrou = False
         for consulta in consultas:
             if consulta.paciente_id == paciente_encontrado.id:
-                # trata hora como string
-                hora_str = str(consulta.hora)
-                if hora_str == "00:00:00":
-                    hora_str = ""  # deixa em branco
+                hora_str = str(consulta.hora).strip()
+
+                if hora_str.startswith("00:00:00"):
+                    hora_str = hora_str.replace("00:00:00", "").strip()
+
+                if len(hora_str) >= 5 and ":" in hora_str:
+                    hora_str = hora_str[:5]
+
                 linha = f"{str(consulta.data).ljust(col_widths[0])}" \
                         f"{hora_str.ljust(col_widths[1])}" \
                         f"{str(consulta.especialidade).ljust(col_widths[2])}"
@@ -56,9 +73,6 @@ class consultaService:
 
         if not encontrou:
             print("Nenhuma consulta encontrada para este paciente.")
-
-            if not encontrou:
-                print("Nenhuma consulta encontrada para este paciente.")
 
     def agendarConsulta(self):
         vali = val.Validacao()

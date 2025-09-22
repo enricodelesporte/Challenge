@@ -3,6 +3,8 @@ from models.consultaModel import Consulta
 
 import datetime
 from datetime import datetime
+import re
+
 
 
 from dataBase.crud.pacienteCRUD import pacienteCRUD
@@ -138,15 +140,16 @@ class Validacao:
             print("Data inválida! Use DD/MM ou DD/MM/YYYY.")
             return input("Digite a data (DD/MM ou DD/MM/YYYY): ")
 
-    def validar_hora(self, hora):
-        hora = hora.strip()
-        try:
-            dt = datetime.strptime(hora, "%H:%M")
-            return dt.strftime("%H:%M")
-        except ValueError:
-            print("Hora inválida! Use HH:MM.")
-            return input("Digite a hora novamente (HH:MM): ")
-    
+    def validar_hora(hora):
+        hora = (hora or "").strip()
+        while True:
+            try:
+                t = datetime.strptime(hora, "%H:%M")
+                return t.strftime("%H:%M")
+            except ValueError:
+                print("Hora inválida! Use o formato HH:MM (ex: 14:30).")
+                hora = input("Digite o horário novamente: ").strip()
+
     def validar_problema(self, problema):
         while not problema or len(problema) <= 100:
             if not problema:
