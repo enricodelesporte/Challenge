@@ -140,7 +140,7 @@ class Validacao:
             print("Data inválida! Use DD/MM ou DD/MM/YYYY.")
             return input("Digite a data (DD/MM ou DD/MM/YYYY): ")
 
-    def validar_hora(hora):
+    def validar_hora(self, hora):
         hora = (hora or "").strip()
         while True:
             try:
