@@ -105,7 +105,8 @@ class consultaService:
                 paciente_id= paciente.id,
                 especialidade=especialidade,
                 data=data,
-                hora=hora
+                hora=hora,
+                id= None
             )
 
             consulta = consultaService()
@@ -127,36 +128,37 @@ class consultaService:
     def listarConsultas(self):
         return self.consultaCRUD.listarConsultas()
 
-    def cancelarConsulta(self, idConsulta):
+    def cancelarConsulta(self):
         vali = val.Validacao()
-
         print("Qual seu CPF: ")
-        paciente = vali.validar_cpf()
+        cpf_paciente = vali.validar_cpf(input())
 
-        if paciente is None:
+        if cpf_paciente is None:
             print("Paciente não cadastrado. Voltando ao menu principal...")
             return 
-        
 
-        paciente_crud = pacienteCRUD(conexao=DBManager.conexao)
-        pacientes = paciente_crud.listarPacientes()
+        consulta_crud = consultaCRUD(conexao=DBManager.conexao)
+        consultas = consulta_crud.listarConsultas()
 
-        cpf_digitado = input("Digite seu CPF para ver suas consultas: ").strip().lower()
-        if not cpf_digitado:
-            print("CPF vazio. Digite um CPF válido.")
+        id_digitado = input("Digite o ID da consulta que deseja desmarcar: ").strip().lower()
+        if not id_digitado:
+            print("ID vazio. Digite um ID válido.")
             return
 
-        paciente_encontrado = None
-        for p in pacientes:
-            if hasattr(p, "cpf") and (p.nome or "").strip().lower() == cpf_digitado:
-                paciente_encontrado = p
+        id_encontrado = None
+
+        for consulta in consultas:
+            if consulta.id == id_digitado:
+                id_encontrado = id_digitado
                 break
 
-        if not paciente_encontrado:
-            print("Paciente não encontrado.")
+        if not id_encontrado:
+            print("ID não encontrado.")
+            print(consulta)
+            print(consulta.id)
+            print(id_digitado)
             return
-        
 
-
-        self.consultaCRUD.deletarConsulta(idConsulta)
-        print("Consulta cancelada com sucesso!")
+        self.consultaCRUD.deletarConsulta(id_encontrado)
+        print("Consulta desmarcada com sucesso!")
+        return

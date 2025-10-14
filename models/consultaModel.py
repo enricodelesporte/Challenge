@@ -7,4 +7,4 @@ class Consulta:
         self.id = id
 
     def __str__(self):
-        return f"Consulta: {self.paciente}, Data: {self.data}, Hora: {self.hora}, Especialidade: {self.especialidade}"
+        return f"Consulta: {self.id}, Data: {self.data}, Hora: {self.hora}, Especialidade: {self.especialidade}"
