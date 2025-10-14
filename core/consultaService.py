@@ -46,8 +46,8 @@ class consultaService:
             return
 
         print("---- Consultas ----")
-        headers = ["Data", "Hora", "Especialidade"]
-        col_widths = [12, 8, 20]
+        headers = ["Data", "Hora", "Especialidade", "ID"]
+        col_widths = [12, 8, 20, 12]
 
         header_line = "".join(header.ljust(width) for header, width in zip(headers, col_widths))
         print(header_line)
@@ -67,7 +67,9 @@ class consultaService:
 
                 linha = f"{str(consulta.data).ljust(col_widths[0])}" \
                         f"{hora_str.ljust(col_widths[1])}" \
-                        f"{str(consulta.especialidade).ljust(col_widths[2])}"
+                        f"{str(consulta.especialidade).ljust(col_widths[2])}"\
+                        f"{str(consulta.id).ljust(col_widths[3])}"
+
                 print(linha)
                 encontrou = True
 
@@ -87,8 +89,10 @@ class consultaService:
         
         print("Selecione uma opção para prosseguir:")
         print("(1) Marcar consulta.")
-        print("(2) Ver minha consultas.")
-        print("(3) Voltar ao menu principal")
+        print("(2) Ver minha consulta.")
+        print("(3) Desmarcar consulta.")
+        print("(4) Remarcar minha consulta.")
+        print("(5) Voltar ao menu principal")
 
         opcao = int(input())
 
@@ -113,6 +117,7 @@ class consultaService:
             self.exibir_consulta()
             return
         elif opcao == 3:
+            self.cancelarConsulta()
             return
         
         else:
@@ -123,5 +128,35 @@ class consultaService:
         return self.consultaCRUD.listarConsultas()
 
     def cancelarConsulta(self, idConsulta):
+        vali = val.Validacao()
+
+        print("Qual seu CPF: ")
+        paciente = vali.validar_cpf()
+
+        if paciente is None:
+            print("Paciente não cadastrado. Voltando ao menu principal...")
+            return 
+        
+
+        paciente_crud = pacienteCRUD(conexao=DBManager.conexao)
+        pacientes = paciente_crud.listarPacientes()
+
+        cpf_digitado = input("Digite seu CPF para ver suas consultas: ").strip().lower()
+        if not cpf_digitado:
+            print("CPF vazio. Digite um CPF válido.")
+            return
+
+        paciente_encontrado = None
+        for p in pacientes:
+            if hasattr(p, "cpf") and (p.nome or "").strip().lower() == cpf_digitado:
+                paciente_encontrado = p
+                break
+
+        if not paciente_encontrado:
+            print("Paciente não encontrado.")
+            return
+        
+
+
         self.consultaCRUD.deletarConsulta(idConsulta)
         print("Consulta cancelada com sucesso!")

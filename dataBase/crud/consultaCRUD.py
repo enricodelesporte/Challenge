@@ -40,7 +40,7 @@ class consultaCRUD:
     def listarConsultas(self):
         self.cursor.execute("SELECT id, paciente_id, data, hora, especialidade FROM CONSULTAS")
         rows = self.cursor.fetchall()
-        return [Consulta(paciente_id=row[1], data=row[2], hora=row[3], especialidade=row[4]) for row in rows]
+        return [Consulta(id= row[0],paciente_id=row[1], data=row[2], hora=row[3], especialidade=row[4]) for row in rows]
     
     def atualizarConsulta(self, idConsulta, novaData, novoHorario):
         sql = "UPDATE CONSULTAS SET data = :1, hora = :2 WHERE id = :3"
