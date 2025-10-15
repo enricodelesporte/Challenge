@@ -133,20 +133,22 @@ class consultaService:
         print("Qual seu CPF: ")
         cpf_paciente = vali.validar_cpf(input())
 
-        if cpf_paciente is None:
-            print("Paciente não cadastrado. Voltando ao menu principal...")
-            return 
+        while cpf_paciente is None:
+            print("CPF inválido. Digite novamente: ")
+            cpf_paciente = vali.validar_cpf(input())
 
         consulta_crud = consultaCRUD(conexao=DBManager.conexao)
         consultas = consulta_crud.listarConsultas()
 
-        id_digitado = input("Digite o ID da consulta que deseja desmarcar: ").strip().lower()
-        if not id_digitado:
-            print("ID vazio. Digite um ID válido.")
+        id_digitado = input("Digite o ID da consulta que deseja desmarcar: ").strip()
+
+        if not id_digitado.isdigit():
+            print("ID inválido. Digite um número válido.")
             return
 
-        id_encontrado = None
+        id_digitado = int(id_digitado)
 
+        id_encontrado = None
         for consulta in consultas:
             if consulta.id == id_digitado:
                 id_encontrado = id_digitado
@@ -154,11 +156,41 @@ class consultaService:
 
         if not id_encontrado:
             print("ID não encontrado.")
-            print(consulta)
-            print(consulta.id)
-            print(id_digitado)
             return
 
-        self.consultaCRUD.deletarConsulta(id_encontrado)
+        consulta_crud.deletarConsulta(id_encontrado)
         print("Consulta desmarcada com sucesso!")
-        return
+
+    def remarcarConsulta(self):
+        vali = val.Validacao()
+        print("Qual seu CPF: ")
+        cpf_paciente = vali.validar_cpf(input())
+
+        while cpf_paciente is None:
+            print("CPF inválido. Digite novamente: ")
+            cpf_paciente = vali.validar_cpf(input())
+
+        consulta_crud = consultaCRUD(conexao=DBManager.conexao)
+        consultas = consulta_crud.listarConsultas()
+
+        id_digitado = int(input("Digite o ID da consulta que deseja remarcar: "))
+
+        if not isinstance(id_digitado, int):
+            print("ID inválido. Digite um número válido.")
+            return
+
+        id_encontrado = None
+        for consulta in consultas:
+            if consulta.id == id_digitado:
+                id_encontrado = id_digitado
+                break
+
+        if not id_encontrado:
+            print("ID não encontrado.")
+            return
+
+        nova_data = vali.validar_data(input("Qual a nova data da consulta: "))
+        nova_hora = vali.validar_hora(input("Qual o novo horário da consulta: "))
+
+        consulta_crud.atualizarConsulta(id_encontrado, nova_data, nova_hora)
+        print("Consulta remarcada com sucesso!")
