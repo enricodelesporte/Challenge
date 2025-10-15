@@ -1,10 +1,8 @@
 from models.pacienteModel import Paciente
 from models.consultaModel import Consulta
 
-import datetime
-from datetime import datetime
 import re
-
+from datetime import datetime, time
 
 
 from dataBase.crud.pacienteCRUD import pacienteCRUD
@@ -147,8 +145,12 @@ class Validacao:
                 t = datetime.strptime(hora, "%H:%M")
                 return t.strftime("%H:%M")
             except ValueError:
-                print("Hora inválida! Use o formato HH:MM (ex: 14:30).")
-                hora = input("Digite o horário novamente: ").strip()
+                try:
+                    t = datetime.strptime(hora, "%H:%M")
+                    return t.strftime("%H:%M")
+                except ValueError:
+                    print("Hora inválida! Use o formato HH:MM (ex: 14:30).")
+                    hora = input("Digite o horário novamente: ").strip()
 
     def validar_problema(self, problema):
         while not problema or len(problema) <= 100:
@@ -160,3 +162,36 @@ class Validacao:
                 problema = input("Tente novamente. Qual probelam deseja relatar:")
                 
         return problema
+    
+    def formatar_hora_para_exibicao(self,h):
+
+        HOUR_RE = re.compile(r'([01]?\d|2[0-3]):([0-5]\d)')
+        
+        if h is None:
+            return ""
+
+        if isinstance(h, (time, datetime)):
+            return h.strftime("%H:%M")
+
+        if isinstance(h, (bytes, bytearray)):
+            try:
+                h = h.decode()
+            except Exception:
+                h = str(h)
+
+        s = str(h).strip()
+        if not s:
+            return ""
+
+        if " " in s:
+            s = s.split()[-1]
+
+        m = HOUR_RE.findall(s)
+        if m:
+            h_found = m[-1]               
+            return f"{int(h_found[0]):02d}:{int(h_found[1]):02d}"
+
+        if ":" in s and len(s) >= 5:
+            return s[:5]
+
+        return ""

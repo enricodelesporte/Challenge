@@ -15,18 +15,23 @@ class consultaService:
         self.consultaCRUD.criarTabelaConsulta()
 
     def _formatar_hora(hora_raw):
-        if hora_raw is None:
+        if not hora_raw:
             return ""
+
         if isinstance(hora_raw, (datetime, time)):
             return hora_raw.strftime("%H:%M")
+
         s = str(hora_raw).strip()
-        s = s.replace("00:00:00", "").strip()
-        m = re.findall(r'([01]?\d|2[0-3]):[0-5]\d', s)
-        if m:
-            return m[-1]
+
+        match = re.search(r'([01]?\d|2[0-3]):([0-5]\d)', s)
+        if match:
+            return match.group(0)
+
         return s
 
     def exibir_consulta(self):
+        vali = val.Validacao()
+
         paciente_crud = pacienteCRUD(conexao=DBManager.conexao)
         pacientes = paciente_crud.listarPacientes()
 
@@ -57,19 +62,14 @@ class consultaService:
         encontrou = False
         for consulta in consultas:
             if consulta.paciente_id == paciente_encontrado.id:
-                hora_str = str(consulta.hora).strip()
+                hora_str = vali.formatar_hora_para_exibicao(consulta.hora)
 
-                if hora_str.startswith("00:00:00"):
-                    hora_str = hora_str.replace("00:00:00", "").strip()
-
-                if len(hora_str) >= 5 and ":" in hora_str:
-                    hora_str = hora_str[:5]
-
-                linha = f"{str(consulta.data).ljust(col_widths[0])}" \
-                        f"{hora_str.ljust(col_widths[1])}" \
-                        f"{str(consulta.especialidade).ljust(col_widths[2])}"\
-                        f"{str(consulta.id).ljust(col_widths[3])}"
-
+                linha = (
+                    f"{str(consulta.data).ljust(col_widths[0])}"
+                    f"{hora_str.ljust(col_widths[1])}"
+                    f"{str(consulta.especialidade).ljust(col_widths[2])}"
+                    f"{str(consulta.id).ljust(col_widths[3])}"
+                )
                 print(linha)
                 encontrou = True
 
@@ -120,9 +120,12 @@ class consultaService:
         elif opcao == 3:
             self.cancelarConsulta()
             return
+        elif opcao == 4:
+            self.remarcarConsulta()
+            return
         
         else:
-            print("Opção inválida. Digite um número de 1 a 3 para poder continuar")
+            print("Opção inválida. Digite um número de 1 a 5 para poder continuar")
 
 
     def listarConsultas(self):

@@ -1,15 +1,11 @@
 from models.consultaModel import Consulta
 from dataBase.conexao.db_manager import DBManager
 
-import re
-from datetime import datetime, time
-
 class consultaCRUD:
     def __init__(self, conexao):
         self.conn = conexao
         self.cursor = self.conn.cursor()
-
-        
+    
     def criarTabelaConsulta(self):
         self.cursor.execute("""
             SELECT table_name
