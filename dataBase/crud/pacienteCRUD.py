@@ -29,6 +29,15 @@ class pacienteCRUD:
             """)
         self.conn.commit()
 
+    def buscarPorCPF(self, cpf):
+        self.cursor.execute("SELECT id, nome, idade, cpf, email, senha, cep FROM PACIENTE WHERE cpf = :cpf", {"cpf": cpf})
+        row = self.cursor.fetchone()
+
+        if row:
+            return Paciente(id=row[0], nome=row[1], idade=row[2], CPF=row[3], email=row[4], senha=row[5], CEP=row[6])
+        else:
+            return None
+
     def criarPaciente (self, paciente: Paciente):
         sql = "INSERT INTO PACIENTE (nome, idade, cpf, email, senha, cep) VALUES ( :1, :2, :3, :4, :5, :6)"
         self.cursor.execute(sql, (paciente.nome, paciente.idade, paciente.CPF, paciente.email, paciente.senha, paciente.CEP))

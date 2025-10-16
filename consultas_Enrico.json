@@ -1,0 +1,18 @@
+[
+    {
+        "id": 13,
+        "paciente_id": 4,
+        "nome_paciente": "Enrico",
+        "data": "2025-10-12",
+        "hora": "12:30",
+        "especialidade": "Cardiologista"
+    },
+    {
+        "id": 83,
+        "paciente_id": 4,
+        "nome_paciente": "Enrico",
+        "data": "2025-10-12",
+        "hora": "14:55",
+        "especialidade": "cardiologista"
+    }
+]

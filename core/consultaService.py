@@ -4,9 +4,9 @@ from utils import validacao as val
 from dataBase.conexao.db_manager import DBManager
 from dataBase.crud.pacienteCRUD import pacienteCRUD
 
-from datetime import datetime, time
+from datetime import date, datetime, time
 import re
-
+import json
 class consultaService:
     def __init__(self):
         conn, cursor = DBManager.conectar()
@@ -29,6 +29,46 @@ class consultaService:
 
         return s
 
+    def exportar_consultas_para_json(self):
+        vali = val.Validacao()
+
+        print("Digite o CPF do paciente que deseja exportar as consultas:")
+        cpf = vali.validar_cpf(input())
+
+        paciente_crud = pacienteCRUD(conexao=DBManager.conexao)
+        paciente = paciente_crud.buscarPorCPF(cpf)
+
+        if not paciente:
+            print("Paciente não encontrado!")
+            return
+
+        consulta_crud = consultaCRUD(conexao=DBManager.conexao)
+        consultas = consulta_crud.listarConsultas()
+
+        consultas_filtradas = [c for c in consultas if c.paciente_id == paciente.id]
+
+        if not consultas_filtradas:
+            print("Nenhuma consulta encontrada para este paciente.")
+            return
+
+        dados_exportar = []
+        for c in consultas_filtradas:
+            dados_exportar.append({
+                "id": c.id,
+                "paciente_id": c.paciente_id,
+                "nome_paciente": paciente.nome,
+                "data": c.data.strftime("%Y-%m-%d") if isinstance(c.data, (date, datetime)) else str(c.data),
+                "hora": str(c.hora),
+                "especialidade": c.especialidade
+            })
+
+        nome_arquivo = f"consultas_{paciente.nome.replace(' ', '_')}.json"
+
+        with open(nome_arquivo, "w", encoding="utf-8") as f:
+            json.dump(dados_exportar, f, ensure_ascii=False, indent=4)
+
+        print(f"Consultas do paciente {paciente.nome} exportadas com sucesso para '{nome_arquivo}'!")
+        
     def exibir_consulta(self):
         vali = val.Validacao()
 
@@ -92,7 +132,8 @@ class consultaService:
         print("(2) Ver minha consulta.")
         print("(3) Desmarcar consulta.")
         print("(4) Remarcar minha consulta.")
-        print("(5) Voltar ao menu principal")
+        print("(5) Exportar consultas para JSON.")
+        print("(6) Voltar ao menu principal")
 
         opcao = int(input())
 
@@ -123,9 +164,12 @@ class consultaService:
         elif opcao == 4:
             self.remarcarConsulta()
             return
+        elif opcao == 5:
+            self.exportar_consultas_para_json()
+            return
         
         else:
-            print("Opção inválida. Digite um número de 1 a 5 para poder continuar")
+            print("Opção inválida. Digite um número de 1 a 6 para poder continuar")
 
 
     def listarConsultas(self):
