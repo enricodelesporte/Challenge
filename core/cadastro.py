@@ -27,10 +27,15 @@ class Cadastro:
         print("Qual sua senha:")
         senha = vali.validar_criar_conta_senha(input())
         print("Qual seu CEP:")
-        cep = CEP.buscar_cep(input())   
-        while not cep:
-            print("Por favor, insira um CEP válido:")
-            cep = CEP.buscar_cep(input())
+        cep_input = input().strip()
+        cep_dados = CEP.buscar_cep(cep_input)
+
+        while not cep_dados:
+            print("CEP inválido. Tente novamente:")
+            cep_input = input("Qual seu CEP: ").strip()
+            cep_dados = CEP.buscar_cep(cep_input)
+
+        cep = cep_dados["cep"]
         
 
         novo_paciente = Paciente(
@@ -39,12 +44,26 @@ class Cadastro:
             idade=idade,
             CPF=cpf,
             email=email,
-            senha=senha
+            senha=senha,
+            CEP=cep
         )
 
         cadastro = Cadastro()
         cadastro.pacienteCRUD.criarPaciente(novo_paciente)
 
         print("Paciente cadastrado com sucesso!")
+        print("------------DADOS CADASTRADOS--------------")
+        print("Nome:", nome)
+        print("Idade:", idade)
+        print("CPF:", cpf)
+        print("Email:", email)
+        print("Senha:", senha)
+        print("CEP:", cep)
+
+        if cep_dados:
+            print(f"Endereço: {cep_dados.get('logradouro', 'Não disponível')}")
+            print(f"Bairro: {cep_dados.get('bairro', 'Não disponível')}")
+            print(f"Cidade: {cep_dados.get('localidade', 'Não disponível')}")
+            print(f"Estado: {cep_dados.get('uf', 'Não disponível')}")
 
         return 
