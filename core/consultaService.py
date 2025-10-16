@@ -62,7 +62,7 @@ class consultaService:
         encontrou = False
         for consulta in consultas:
             if consulta.paciente_id == paciente_encontrado.id:
-                hora_str = vali.formatar_hora_para_exibicao(consulta.hora)
+                hora_str = consultaCRUD.normalizar_hora_banco(consulta.hora)
 
                 linha = (
                     f"{str(consulta.data).ljust(col_widths[0])}"

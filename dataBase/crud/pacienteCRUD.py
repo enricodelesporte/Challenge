@@ -30,18 +30,18 @@ class pacienteCRUD:
         self.conn.commit()
 
     def criarPaciente (self, paciente: Paciente):
-        sql = "INSERT INTO PACIENTE (nome, idade, cpf, email, senha) VALUES ( :1, :2, :3, :4, :5)"
-        self.cursor.execute(sql, (paciente.nome, paciente.idade, paciente.CPF, paciente.email, paciente.senha))
+        sql = "INSERT INTO PACIENTE (nome, idade, cpf, email, senha, cep) VALUES ( :1, :2, :3, :4, :5, :6)"
+        self.cursor.execute(sql, (paciente.nome, paciente.idade, paciente.CPF, paciente.email, paciente.senha, paciente.CEP))
         self.conn.commit()
 
     def listarPacientes(self):
-        self.cursor.execute("SELECT id, nome, idade,  cpf, email, senha FROM PACIENTE")
+        self.cursor.execute("SELECT id, nome, idade,  cpf, email, senha, cep FROM PACIENTE")
         rows = self.cursor.fetchall()
-        return [Paciente(id=row[0], nome=row[1], idade=row[2], CPF=row[3], email=row[4], senha=row[5]) for row in rows]
+        return [Paciente(id=row[0], nome=row[1], idade=row[2], CPF=row[3], email=row[4], senha=row[5], CEP=row[6]) for row in rows]
 
-    def atualizarPaciente(self, paciente_id, novoNome, novaIdade, novoEmail, novaSenha):
-        sql = "UPDATE PACIENTE SET nome = :1, idade = :2, email = :3, senha = :4 WHERE id = :5"
-        self.cursor.execute(sql, (novoNome, novaIdade, novoEmail, novaSenha, paciente_id))
+    def atualizarPaciente(self, paciente_id, novoNome, novaIdade, novoEmail, novaSenha, novoCEP):
+        sql = "UPDATE PACIENTE SET nome = :1, idade = :2, email = :3, senha = :4, cep = :5 WHERE id = :6"
+        self.cursor.execute(sql, (novoNome, novaIdade, novoEmail, novaSenha, novoCEP, paciente_id))
         self.conn.commit()
 
     def deletarPaciente(self, paciente_id):

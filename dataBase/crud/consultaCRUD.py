@@ -1,11 +1,32 @@
 from models.consultaModel import Consulta
 from dataBase.conexao.db_manager import DBManager
+import re
+from datetime import datetime, time
 
 class consultaCRUD:
     def __init__(self, conexao):
         self.conn = conexao
         self.cursor = self.conn.cursor()
+
+    def normalizar_hora_banco(valor):
+        if not valor:
+            return ""
     
+        if isinstance(valor, (datetime, time)):
+            return valor.strftime("%H:%M")
+
+        s = str(valor).strip()
+
+        padrao_hora = re.search(r'([01]?\d|2[0-3]):[0-5]\d', s)
+        if padrao_hora:
+            return padrao_hora.group(0)
+
+        if ":" in s and len(s) >= 5:
+            return s[:5]
+
+        return s
+
+
     def criarTabelaConsulta(self):
         self.cursor.execute("""
             SELECT table_name
